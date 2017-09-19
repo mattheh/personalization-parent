@@ -1,0 +1,27 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.redhat.officedepot</groupId>
+  <artifactId>personalization</artifactId>
+  <version>0.0.1-SNAPSHOT</version>
+  <packaging>pom</packaging>
+  <name>personalization-parent</name>
+  <properties>
+  	<fabric8.io.version>2.2.170.redhat-000013</fabric8.io.version>
+  </properties>
+  <dependencyManagement>
+    <dependencies>
+        <!-- fabric8 bom  -->
+        <dependency>
+            <groupId>io.fabric8</groupId>
+            <artifactId>fabric8-project-bom-camel-spring-boot</artifactId>
+            <version>${fabric8.io.version}</version>
+            <type>pom</type>
+            <scope>import</scope>
+        </dependency>
+    </dependencies>
+  </dependencyManagement> 
+  <modules>
+  	<module>personalization-entities</module>
+  	<module>personalization-common</module>
+  </modules>
+</project>
