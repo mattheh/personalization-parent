@@ -1,0 +1,733 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2009 sp1 (http://www.altova.com) by Sivakumar Shanmugam 
+	(Officemax, Inc.) -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns="http://eai.officedepot.com/model/Inventory" xmlns:inventory="http://eai.officedepot.com/model/Inventory"
+	xmlns:odcommon="http://eai.officedepot.com/model/ODCommon"
+	targetNamespace="http://eai.officedepot.com/model/Inventory"
+	xmlns:supplier="http://eai.officedepot.com/model/Supplier"
+	elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:import schemaLocation="Supplier.xsd"
+		namespace="http://eai.officedepot.com/model/Supplier"></xs:import>
+	<xs:import namespace="http://eai.officedepot.com/model/ODCommon"
+		schemaLocation="ODCommon.xsd" />
+	<xs:complexType name="SkuDetailsType">
+		<xs:annotation>
+			<xs:documentation>
+				Information regarding the Sku
+			</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="SkuType">
+				<xs:sequence>
+					<xs:element name="skuBrand" type="SkuBrandType"
+						minOccurs="0" />
+					<xs:element name="skuProduct" type="SkuProductType"
+						minOccurs="0" />
+					<xs:element name="skuClass" type="SkuClassType"
+						minOccurs="0" />
+					<xs:element name="skuSubclass" type="SkuSubclassType"
+						minOccurs="0" />
+					<xs:element name="skuPrivateLabel" type="SkuPrivateLabelType"
+						minOccurs="0" />
+					<xs:element name="mobileDeviceSkuAttributes" type="SkuMobileDeviceAttributesType"
+						maxOccurs="1" minOccurs="0"></xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:simpleType name="SkuIdType">
+		<xs:restriction base="xs:string" />
+	</xs:simpleType>
+	<xs:simpleType name="SkuGroupType">
+		<xs:restriction base="xs:string" />
+	</xs:simpleType>
+	<xs:simpleType name="SkuDepartmentType">
+		<xs:restriction base="xs:string" />
+	</xs:simpleType>
+	<xs:simpleType name="SkuClassType">
+		<xs:restriction base="xs:string" />
+	</xs:simpleType>
+	<xs:simpleType name="SkuSubclassType">
+		<xs:restriction base="xs:string" />
+	</xs:simpleType>
+	<xs:simpleType name="SkuBrandType">
+		<xs:restriction base="xs:string" />
+	</xs:simpleType>
+	<xs:simpleType name="SkuProductType">
+		<xs:restriction base="xs:string" />
+	</xs:simpleType>
+	<xs:simpleType name="SkuPrivateLabelType">
+		<xs:restriction base="xs:string" />
+	</xs:simpleType>
+	<xs:simpleType name="SkuShortDescriptionType">
+		<xs:restriction base="xs:string" />
+	</xs:simpleType>
+	<xs:simpleType name="SkuDescriptionType">
+		<xs:restriction base="xs:string" />
+	</xs:simpleType>
+	<xs:simpleType name="SkuBrandDescriptionType">
+		<xs:restriction base="xs:string" />
+	</xs:simpleType>
+	<xs:complexType name="SkuType">
+		<xs:sequence>
+			<xs:element name="Id" type="SkuIdType" minOccurs="0" />
+			<xs:element name="skuGroup" type="SkuGroupType" minOccurs="0" />
+			<xs:element name="skuDepartment" type="SkuDepartmentType"
+				minOccurs="0" />
+			<xs:element name="skuShortDescription" type="SkuShortDescriptionType"
+				minOccurs="0" />
+			<xs:element name="skuDescription" type="SkuDescriptionType"
+				minOccurs="0" />
+			<xs:element name="skuSupplier" type="SkuSupplierType"
+				minOccurs="0" />
+			<xs:element name="skuBrandDetail" type="SkuBrandDetailType"
+				minOccurs="0" />
+			<xs:element name="skuUPC" type="SkuUPCType" minOccurs="0"
+				maxOccurs="1" />
+			<xs:element name="skuUom" type="odcommon:BaseMeasurementType"
+				minOccurs="0" />
+			<xs:element name="parentSubClass" type="SkuSubClassDetailType"
+				minOccurs="0" />
+			<xs:element name="skuListPrice" type="odcommon:FinanicalAmountType"
+				minOccurs="0">
+			</xs:element>
+			<xs:element name="skuMSRP" type="odcommon:FinanicalAmountType"
+				minOccurs="0">
+			</xs:element>
+			<xs:element name="minimumShipToStoreQuantityUPC" type="SkuUPCType"
+				minOccurs="0">
+			</xs:element>
+			<xs:element name="harmonizedTariffNumber" type="xs:integer"
+				minOccurs="0">
+			</xs:element>
+			<xs:element name="recycledMaterialInformation" type="RecycledMaterialInformationType"
+				minOccurs="0">
+			</xs:element>
+			<xs:element name="batteryInformation" type="BatteryInformationType"
+				minOccurs="0">
+			</xs:element>
+			<xs:element name="skuAttributes" type="SkuAttributesType"
+				minOccurs="0">
+			</xs:element>
+			<xs:element name="skuSupplierRelationship" type="supplier:SupplierItemRelationshipType"
+				minOccurs="0">
+			</xs:element>
+			<xs:element name="skuDepartmentDetail" type="SkuDepartmentDetailType"
+				minOccurs="0">
+			</xs:element>
+			<xs:element name="privateBrandDetail" type="SkuBrandDetailType"
+				minOccurs="0">
+			</xs:element>
+			<xs:element name="skuManufacturer" type="ItemManufacturerType"
+				minOccurs="0">
+			</xs:element>
+			<xs:element name="systemClassifier" type="odcommon:SystemClassifierType"
+				minOccurs="0">
+			</xs:element>
+			<xs:element name="skuUnitsPerPackage" type="odcommon:QuantityType"
+				minOccurs="0"></xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- BRE - Product and Store -->
+	<xs:complexType name="SkuSubClassDetailType">
+		<xs:annotation>
+			<xs:documentation>Represents Sku Sub Class Details</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="SkuClassDetailType">
+				<xs:sequence>
+					<xs:element name="subClassCode" type="xs:string"
+						minOccurs="0" />
+					<xs:element name="subClassName" type="xs:string"
+						minOccurs="0" />
+					<xs:element name="parentClass" type="SkuClassDetailType"
+						minOccurs="0" />
+					<xs:element name="defaultTaxCategory" type="xs:string"
+						minOccurs="0" />
+					<xs:element name="globalContentIndicator" type="xs:string"
+						minOccurs="0" />
+					<xs:element name="consumableGoodsIndicator" type="xs:string"
+						minOccurs="0" />
+					<xs:element name="taxableIndicator" type="xs:string"
+						minOccurs="0" />
+					<xs:element name="deliveryThreshold" type="xs:string"
+						minOccurs="0" />
+					<xs:element name="mpnIndicator" type="xs:string"
+						minOccurs="0" />
+					<xs:element name="accessoryIndicator" type="xs:string"
+						minOccurs="0" />
+					<xs:element name="alternateSubstituteIndicator" type="xs:string"
+						minOccurs="0" />
+					<xs:element name="quoteableFlag" type="xs:string"
+						minOccurs="0" />
+					<xs:element name="displaySkuFlag" type="xs:string"
+						minOccurs="0" />
+					<xs:element name="misshipFlag" type="xs:string"
+						minOccurs="0" />
+					<xs:element name="procurementCalculationFlag" type="xs:string"
+						minOccurs="0" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="SkuClassDetailType">
+		<xs:annotation>
+			<xs:documentation>Represents Sku Class Details</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="classCode" type="xs:string" minOccurs="0" />
+			<xs:element name="className" type="xs:string" minOccurs="0" />
+			<xs:element name="parentDepartment" type="SkuDepartmentDetailType"
+				minOccurs="0" />
+			<xs:element name="classVATIndicator" type="xs:string"
+				minOccurs="0" />
+			<xs:element name="automaticMarkdownDays" type="xs:string"
+				minOccurs="0" />
+			<xs:element name="fifthMArkdownProcessCode" type="xs:string"
+				minOccurs="0" />
+			<xs:element name="priceZone" type="PriceZoneType"
+				minOccurs="0" />
+			<xs:element name="highValue" type="odcommon:KeyValuePairType"
+				minOccurs="0" />
+			<xs:element name="reportingSortOrder" type="xs:string"
+				minOccurs="0" />
+			<xs:element name="tier1PriceMatchFlag" type="xs:string"
+				minOccurs="0" />
+			<xs:element name="merchantAutoApproveFlag" type="xs:string"
+				minOccurs="0" />
+			<xs:element name="furnitureFlag" type="xs:string"
+				minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PriceZoneType">
+		<xs:annotation>
+			<xs:documentation>Represents Sku Price Zone Details</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="costFlag" type="xs:string" minOccurs="0" />
+			<xs:element name="priceFlag" type="xs:string" minOccurs="0" />
+			<xs:element name="listFlag" type="xs:string" minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SkuDepartmentDetailType">
+		<xs:annotation>
+			<xs:documentation>Represents Sku Department Details</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="departmentCode" type="xs:string"
+				minOccurs="0" />
+			<xs:element name="departmentName" type="xs:string"
+				minOccurs="0" />
+			<xs:element name="parentGroup" type="SkuGroupDetailType"
+				minOccurs="0" />
+			<xs:element name="profitCalculationType" type="xs:string"
+				minOccurs="0" />
+			<xs:element name="openToBuyCalculationType" type="xs:string"
+				minOccurs="0" />
+			<xs:element name="purchaseType" type="xs:string"
+				minOccurs="0" />
+			<xs:element name="departmentMarkup" type="DapartmentMarkupType"
+				minOccurs="0" />
+			<xs:element name="departmentPlanningIndicator" type="DepartmentPlanningIndicatorType"
+				minOccurs="0" />
+			<xs:element name="totalMarketAmount" type="xs:decimal"
+				minOccurs="0" />
+			<xs:element name="maximumAverageCounter" type="xs:decimal"
+				minOccurs="0" />
+			<xs:element name="averageTolerancePercent" type="xs:decimal"
+				minOccurs="0" />
+			<xs:element name="tdcPoVariancePercent" type="xs:string"
+				minOccurs="0" />
+			<xs:element name="tdcNetVariancePercent" type="xs:string"
+				minOccurs="0" />
+			<xs:element name="reportingSortOrder" type="xs:string"
+				minOccurs="0" />
+			<xs:element name="gsFurnitureFlag" type="xs:string"
+				minOccurs="0" />
+			<xs:element name="segmentationFlag" type="xs:string"
+				minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DepartmentPlanningIndicatorType">
+		<xs:annotation>
+			<xs:documentation>Represents Sku Department Planning Indicators</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="vatIndicator" type="xs:string"
+				minOccurs="0" />
+			<xs:element name="planIndicator" type="xs:string"
+				minOccurs="0" />
+			<xs:element name="forecastIndicator" type="xs:string"
+				minOccurs="0" />
+			<xs:element name="nonCodeIndicator" type="xs:string"
+				minOccurs="0" />
+			<xs:element name="productProtectionIndicator" type="xs:string"
+				minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DapartmentMarkupType">
+		<xs:annotation>
+			<xs:documentation>
+				Represents Sku Department Markup Details
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="retailMarkupPercent" type="xs:decimal"
+				minOccurs="0" />
+			<xs:element name="costMarkupPercent" type="xs:decimal"
+				minOccurs="0" />
+			<xs:element name="markupCalculationType" type="xs:string"
+				minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SkuGroupDetailType">
+		<xs:annotation>
+			<xs:documentation>Represents Sku Group Details	</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="groupCode" type="xs:string" minOccurs="0" />
+			<xs:element name="groupName" type="xs:string" minOccurs="0" />
+			<xs:element name="parentDivision" type="SkuDivisionDetailType"
+				minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SkuDivisionDetailType">
+		<xs:annotation>
+			<xs:documentation>Represents SKU Division</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="divisionCode" type="xs:string"
+				minOccurs="0" />
+			<xs:element name="divisionName" type="xs:string"
+				minOccurs="0" />
+			<xs:element name="buyer" type="xs:string" minOccurs="0" />
+			<xs:element name="merchant" type="xs:string" minOccurs="0" />
+			<xs:element name="parentCompany" type="SkuCompanyDetailType"
+				minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SkuUPCType">
+		<xs:annotation>
+			<xs:documentation>Represents UPC Type definition for SKU</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="upcCode" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						Universal Product Codes are used to identify a
+						product during shipping, receiving, and point of
+						sale. Office Depot
+						most commonly uses 12 and 14
+						digit UPCs for various uses.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="upcIndicator" type="SkuUPCIndicatorType"
+				minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						Indicator on type of UPC such as UPC-A (12
+						digit), UCC-14 (14 digit) and EAN-13
+					</xs:documentation>
+				</xs:annotation>
+
+			</xs:element>
+			<xs:element name="upcPackageType" type="SkuUPCPackageTypeType"
+				minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						SELL, INNER, MASTER, PALLET, TIER, OTHER
+
+						Types:
+						Sell, inner(ship to store),
+						case/master(vendor ships this unit),
+						pallet,
+						tier (TI) and other
+
+						Sell UPC (UPC-A*) UPCs that are in the
+						UPC-A
+						format are 12 digits and are comprised of three
+						components:
+						Manufacturer Code, Product Code, and
+						Check Digit. Note that the
+						Manufacturer Code for
+						Private Brand is always 7-35854.
+
+						Inner and
+						Master UPC (UCC-14) UPCs that are in
+						the UCC-14 format are 14
+						digits, are related to
+						a UPC-A, and are comprised of four
+						components:
+						1) a Packaging Level digit; 2) a zero (‘0’); 3)
+						the
+						Manufacturing Code and Product Code from the
+						original UPC-A for the
+						related item (the Sell
+						UPC); and 4) a Check Digit. Note that for
+						this
+						project, the Inner Pack UPC begins with 3 and
+						the Master Pack
+						UPC begins with 5
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="isPrimaryUPC" type="xs:boolean"
+				minOccurs="0"></xs:element>
+			<xs:element name="upcProductCodeSubset" type="xs:string"
+				minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						Product code subset of UPC code
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="upcQuantity" type="odcommon:QuantityType"
+				minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						Quantity of sub UPCs within this UPC or 1 for
+						sell/each
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="upcPhysicalAttributes" type="SkuUPCPhysicalAttributesType"
+				minOccurs="0">
+			</xs:element>
+			<xs:element name="upcInternalLayering" type="SkuUPCInternalLayeringType"
+				minOccurs="0">
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SkuSupplierType">
+		<xs:annotation>
+			<xs:documentation>Represents SKU Supplier</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="supplierCode" type="xs:string"
+				minOccurs="0" />
+			<xs:element name="supplierName" type="xs:string"
+				minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SkuBrandDetailType">
+		<xs:annotation>
+			<xs:documentation>Represents SKU Brand</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="brandCode" type="xs:string" minOccurs="0" />
+			<xs:element name="brandName" type="xs:string" minOccurs="0" />
+			<xs:element name="brandLine" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>In OfficeDepot - Scholastic - Mead notebooks,
+						brand line refers to Mead</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SkuCompanyDetailType">
+		<xs:annotation>
+			<xs:documentation>Represents SKU Company</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="companyCode" type="xs:string" minOccurs="0" />
+			<xs:element name="companyName" type="xs:string" minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="SkuMobileDeviceAttributesType">
+		<xs:sequence>
+			<xs:element name="partNumber" type="xs:string" maxOccurs="1"
+				minOccurs="0"></xs:element>
+			<xs:element name="carrier" type="xs:string" maxOccurs="1"
+				minOccurs="0"></xs:element>
+			<xs:element name="memoryGB" type="xs:string" maxOccurs="1"
+				minOccurs="0"></xs:element>
+			<xs:element name="color" type="xs:string" maxOccurs="1"
+				minOccurs="0"></xs:element>
+			<xs:element name="manufacturer" type="xs:string"
+				maxOccurs="1" minOccurs="0"></xs:element>
+			<xs:element name="description" type="xs:string" maxOccurs="1"
+				minOccurs="0"></xs:element>
+			<xs:element name="model" type="xs:string" maxOccurs="1"
+				minOccurs="0"></xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="KitType">
+		<xs:complexContent>
+			<xs:extension base="SkuDetailsType">
+				<xs:sequence>
+					<xs:element name="kitComponent" maxOccurs="1" minOccurs="0">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="kitComponent" type="KitComponentType"
+									maxOccurs="unbounded" minOccurs="0">
+								</xs:element>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="KitComponentType">
+		<xs:complexContent>
+			<xs:extension base="SkuDetailsType">
+				<xs:sequence>
+					<xs:element name="kitItem" type="SkuIdType" maxOccurs="1"
+						minOccurs="0"></xs:element>
+					<xs:element name="kitType" type="KitTypeType" maxOccurs="1"
+						minOccurs="0"></xs:element>
+					<xs:element name="componentType" type="ComponentTypeType"
+						maxOccurs="1" minOccurs="0"></xs:element>
+					<xs:element name="componentValue" type="ComponentValueType"
+						maxOccurs="1" minOccurs="0">
+					</xs:element>
+					<xs:element name="quantity" type="odcommon:QuantityType"
+						maxOccurs="1" minOccurs="0"></xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:simpleType name="ComponentTypeType">
+		<xs:annotation>
+			<xs:documentation>
+				Definition for status description
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="256" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ComponentValueType">
+		<xs:annotation>
+			<xs:documentation>
+				Definition for status description
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="256" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="KitTypeType">
+		<xs:annotation>
+			<xs:documentation>
+				Definition for status description
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="256" />
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="SkuUPCIndicatorType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="UPC-A"></xs:enumeration>
+			<xs:enumeration value="UCC14"></xs:enumeration>
+			<xs:enumeration value="EAN13"></xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+
+	<xs:simpleType name="SkuUPCPackageTypeType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="SELL"></xs:enumeration>
+			<xs:enumeration value="INNER"></xs:enumeration>
+			<xs:enumeration value="MASTER"></xs:enumeration>
+			<xs:enumeration value="PALLET"></xs:enumeration>
+			<xs:enumeration value="TIER"></xs:enumeration>
+			<xs:enumeration value="OTHER"></xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+
+
+
+
+
+	<xs:complexType name="CountryOfOriginListType">
+		<xs:sequence>
+			<xs:element name="countryOfOriginCode" type="odcommon:CountryMailingCodeType"
+				minOccurs="0" maxOccurs="unbounded">
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="SkuUPCPhysicalAttributesType">
+		<xs:sequence>
+			<xs:element name="upcGrossWeight" type="odcommon:BaseMeasurementType"
+				minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						Gross weight of item represented by upc
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="upcNetWeight" type="odcommon:BaseMeasurementType"
+				minOccurs="0">
+			</xs:element>
+			<xs:element name="upcDimension" type="odcommon:DimensionType"
+				minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						Dimension of item represented by upc
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+
+	<xs:complexType name="SkuPackageLevelUPCListType">
+		<xs:sequence>
+			<xs:element name="packageLevelUPC" type="SkuUPCType"
+				maxOccurs="unbounded" minOccurs="0"></xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="RecycledInformationBreakdownType">
+		<xs:sequence>
+			<xs:element name="hasRecycledContent" type="xs:boolean"
+				minOccurs="0">
+			</xs:element>
+			<xs:element name="recycledPercentage" type="odcommon:PercentType"
+				minOccurs="0"></xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="RecycledMaterialInformationType">
+		<xs:sequence>
+			<xs:element name="aggregateRecycleInformation" type="RecycledInformationBreakdownType"
+				minOccurs="0">
+			</xs:element>
+			<xs:element name="preConsumerRecycleInformation" type="RecycledInformationBreakdownType"
+				minOccurs="0">
+			</xs:element>
+			<xs:element name="postConsumerRecycleInformation" type="RecycledInformationBreakdownType"
+				minOccurs="0"></xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="SkuAttributesType">
+		<xs:annotation>
+			<xs:documentation>If the item is poisonous/toxic etc
+				Alphanumeric industry Standard Codes</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="fireCode" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						Flamable or non flamable/explosive etc
+						Alphanumeric industry standard codes
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="safetyCode" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						If the item is poisonous/toxic etc Alphanumeric
+						industry Standard Codes
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="demandForecastingCode" type="xs:string"
+				minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						Forecasting code to determine demand for an
+						item, such as general lifecycle and seasonal
+						demand. Possble values are 1 and 2. Alias: RDF
+						Substitute Method
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="isImportItem" type="xs:boolean"
+				minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						TRUE if item is an import and FALSE otherwice
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="isBottleDepositEligible" type="xs:boolean"
+				minOccurs="0">
+			</xs:element>
+			<xs:element name="isPrivateLabelItem" type="xs:boolean"
+				minOccurs="0"></xs:element>
+			<xs:element name="isReadyToAssemble" type="xs:boolean"
+				minOccurs="0">
+			</xs:element>
+			<xs:element name="isCarcinogenic" type="xs:boolean"
+				minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						TRUE if item contains carcinogenic ingredients
+						and FALSE otherwice
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="containsHazardousMaterials" type="xs:boolean"
+				minOccurs="0"></xs:element>
+			<xs:element name="requiresAgeVerification" type="xs:boolean"
+				minOccurs="0">
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="BatteryInformationType">
+		<xs:sequence>
+			<xs:element name="isBatteryRequired" type="xs:boolean"
+				minOccurs="0">
+			</xs:element>
+			<xs:element name="isBatteryIncluded" type="xs:string"
+				minOccurs="0">
+			</xs:element>
+			<xs:element name="batterySets" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="batterySet" type="odcommon:BatterySetType"
+							maxOccurs="unbounded">
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+
+
+	<xs:complexType name="SkuUPCInternalLayeringType">
+		<xs:sequence>
+			<xs:element name="subUPCInLayerQuantity" type="odcommon:QuantityType"
+				minOccurs="0">
+			</xs:element>
+			<xs:element name="layersStackedInUPC" type="odcommon:QuantityType"
+				minOccurs="0"></xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+
+	<xs:complexType name="ManufacturerType">
+		<xs:complexContent>
+			<xs:extension base="odcommon:CompanyIdentityType">
+				<xs:sequence>
+					<xs:element name="manufacturerId" type="odcommon:IDType"
+						minOccurs="0"></xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+
+	<xs:complexType name="ItemManufacturerType">
+		<xs:sequence>
+			<xs:element name="manufacturer" type="ManufacturerType"
+				minOccurs="0"></xs:element>
+			<xs:element name="manufacturerProductNumber" type="odcommon:IDType"
+				minOccurs="0">
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+</xs:schema>

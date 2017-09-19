@@ -1,0 +1,373 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema targetNamespace="http://eai.officedepot.com/service/ProductHierarchyService"
+	elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:phs="http://eai.officedepot.com/service/ProductHierarchyService"
+	xmlns:odc="http://eai.officedepot.com/model/ODCommon" xmlns:inventory="http://eai.officedepot.com/model/Inventory"
+	xmlns:trx="http://www.officedepot.com/model/transaction">
+
+	<xs:import
+		schemaLocation="../CommonFrameworkV2/Transaction.xsd"
+		namespace="http://www.officedepot.com/model/transaction" />
+
+	<xs:import schemaLocation="../ODCommon/ODCommon.xsd"
+		namespace="http://eai.officedepot.com/model/ODCommon">
+	</xs:import>
+	<xs:import schemaLocation="../ODCommon/Inventory.xsd"
+	namespace="http://eai.officedepot.com/model/Inventory" />
+	
+	<xs:complexType name="ProductSummaryLookupResponseType">
+		<xs:annotation>
+			<xs:documentation>
+				Product Suummary Lookup Response
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element ref="trx:transactionHeader" />
+			<xs:element name="results" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="products" type="phs:ProductSummaryLookupResultType"
+							minOccurs="0" maxOccurs="unbounded" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="resultSummary" type="odc:BaseLookupResultSummaryType"
+				minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ProductSummaryLookupResultType">
+		<xs:annotation>
+			<xs:documentation>
+				Product Summary Lookup Result
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="productCode" type="xs:string" minOccurs="0" />
+			<xs:choice>
+				<xs:element name="product" type="inventory:SkuType"
+					minOccurs="0" />
+				<xs:element name="errorMessage" type="xs:string"
+					minOccurs="0" />
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ProductSubClassLookupResponseType">
+		<xs:annotation>
+			<xs:documentation>
+				Product Sub Class Lookup Response
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element ref="trx:transactionHeader" />
+			<xs:element name="results" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="subClasses" type="phs:ProductSubClassLookupResultType"
+							minOccurs="0" maxOccurs="unbounded" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="resultSummary" type="odc:BaseLookupResultSummaryType"
+				minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ProductSubClassLookupResultType">
+		<xs:annotation>
+			<xs:documentation>
+				Product Sub Class Lookup Result
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="subClassCode" type="xs:string"
+				minOccurs="0" />
+			<xs:choice>
+				<xs:element name="subClass" type="inventory:SkuSubClassDetailType"
+					minOccurs="0" />
+				<xs:element name="errorMessage" type="xs:string"
+					minOccurs="0" />
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ProductClassLookupResponseType">
+		<xs:annotation>
+			<xs:documentation>
+				Product Class Lookup Response
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element ref="trx:transactionHeader" />
+			<xs:element name="results" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="classes" type="phs:ProductClassLookupResultType"
+							minOccurs="0" maxOccurs="unbounded" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="resultSummary" type="odc:BaseLookupResultSummaryType"
+				minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ProductClassLookupResultType">
+		<xs:annotation>
+			<xs:documentation>
+				Product Class Lookup Result
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="classCode" type="xs:string" minOccurs="0" />
+			<xs:choice>
+				<xs:element name="class" type="inventory:SkuClassDetailType"
+					minOccurs="0" />
+				<xs:element name="errorMessage" type="xs:string"
+					minOccurs="0" />
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ProductDepartmentLookupResponseType">
+		<xs:annotation>
+			<xs:documentation>
+				Product Department Lookup Response
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element ref="trx:transactionHeader" />
+			<xs:element name="results" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="departments"
+							type="phs:ProductDepartmentLookupResultType" minOccurs="0"
+							maxOccurs="unbounded" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="resultSummary" type="odc:BaseLookupResultSummaryType"
+				minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ProductDepartmentLookupResultType">
+		<xs:annotation>
+			<xs:documentation>
+				Product Department Lookup Result
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="departmentCode" type="xs:string"
+				minOccurs="0" />
+			<xs:choice>
+				<xs:element name="department" type="inventory:SkuDepartmentDetailType"
+					minOccurs="0" />
+				<xs:element name="errorMessage" type="xs:string"
+					minOccurs="0" />
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ProductGroupLookupResponseType">
+		<xs:annotation>
+			<xs:documentation>
+				Product Group Lookup Response
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element ref="trx:transactionHeader" />
+			<xs:element name="results" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="groups" type="phs:ProductGroupLookupResultType"
+							minOccurs="0" maxOccurs="unbounded" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="resultSummary" type="odc:BaseLookupResultSummaryType"
+				minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ProductGroupLookupResultType">
+		<xs:annotation>
+			<xs:documentation>
+				Product Group Lookup Result
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="groupCode" type="xs:string" minOccurs="0" />
+			<xs:choice>
+				<xs:element name="group" type="inventory:SkuGroupDetailType"
+					minOccurs="0" />
+				<xs:element name="errorMessage" type="xs:string"
+					minOccurs="0" />
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ProductDivisionLookupResponseType">
+		<xs:annotation>
+			<xs:documentation>
+				Product Division Lookup Response
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element ref="trx:transactionHeader" />
+			<xs:element name="results" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="divisions" type="phs:ProductDivisionLookupResultType"
+							minOccurs="0" maxOccurs="unbounded" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="resultSummary" type="odc:BaseLookupResultSummaryType"
+				minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ProductDivisionLookupResultType">
+		<xs:annotation>
+			<xs:documentation>
+				Product Division Lookup Result
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="divisionCode" type="xs:string"
+				minOccurs="0" />
+			<xs:choice>
+				<xs:element name="division" type="inventory:SkuDivisionDetailType"
+					minOccurs="0" />
+				<xs:element name="errorMessage" type="xs:string"
+					minOccurs="0" />
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ProductSummaryLookupRequestType">
+		<xs:annotation>
+			<xs:documentation>
+				Product Summary Lookup Request
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element ref="trx:transactionHeader" />
+			<xs:element name="productCodes">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="productCode" type="xs:string"
+							maxOccurs="unbounded" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ProductSubClassLookupRequestType">
+		<xs:annotation>
+			<xs:documentation>
+				Product Sub Class Lookup Request
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element ref="trx:transactionHeader" />
+			<xs:element name="subClassCodes">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="subClassCode" type="xs:string"
+							maxOccurs="unbounded" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ProductClassLookupRequestType">
+		<xs:annotation>
+			<xs:documentation>
+				Product Class Lookup Request
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element ref="trx:transactionHeader" />
+			<xs:element name="classCodes">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="classCode" type="xs:string"
+							maxOccurs="unbounded" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ProductDepartmentLookupRequestType">
+		<xs:annotation>
+			<xs:documentation>
+				Product Department Lookup Request
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element ref="trx:transactionHeader" />
+			<xs:element name="departmentCodes">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="departmentCode" type="xs:string"
+							maxOccurs="unbounded" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ProductGroupLookupRequestType">
+		<xs:annotation>
+			<xs:documentation>
+				Product Group Lookup Request
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element ref="trx:transactionHeader" />
+			<xs:element name="groupCodes">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="groupCode" type="xs:string"
+							maxOccurs="unbounded" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ProductDivisionLookupRequestType">
+		<xs:annotation>
+			<xs:documentation>
+				Product Division Lookup Request
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element ref="trx:transactionHeader" />
+			<xs:element name="divisionCodes">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="divisionCode" type="xs:string"
+							maxOccurs="unbounded" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+	<!-- Added request,response elements - Kallesh -->
+
+	<xs:element name="productSummaryLookupRequest" type="phs:ProductSummaryLookupRequestType">
+	</xs:element>
+	<xs:element name="productSummaryLookupResponse" type="phs:ProductSummaryLookupResponseType">
+	</xs:element>
+	<xs:element name="productSubClassLookupRequest" type="phs:ProductSubClassLookupRequestType">
+	</xs:element>
+	<xs:element name="productSubClassLookupResponse" type="phs:ProductSubClassLookupResponseType">
+	</xs:element>
+	<xs:element name="productClassLookupRequest" type="phs:ProductClassLookupRequestType">
+	</xs:element>
+	<xs:element name="productClassLookupResponse" type="phs:ProductClassLookupResponseType">
+	</xs:element>
+	<xs:element name="productDepartmentLookupRequest" type="phs:ProductDepartmentLookupRequestType">
+	</xs:element>
+	<xs:element name="productDepartmentLookupResponse" type="phs:ProductDepartmentLookupResponseType">
+	</xs:element>
+	<xs:element name="productGroupLookupRequest" type="phs:ProductGroupLookupRequestType">
+	</xs:element>
+	<xs:element name="productGroupLookupResponse" type="phs:ProductGroupLookupResponseType">
+	</xs:element>
+	<xs:element name="productDivisionLookupRequest" type="phs:ProductDivisionLookupRequestType">
+	</xs:element>
+	<xs:element name="productDivisionLookupResponse" type="phs:ProductDivisionLookupResponseType">
+	</xs:element>
+</xs:schema>

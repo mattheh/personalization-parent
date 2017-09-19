@@ -1,0 +1,698 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2009 sp1 (http://www.altova.com) by Mike C (Officemax, 
+	Inc.) -->
+<!--This schema includes transaction-level information about an OfficeDepot 
+	ESB service. It should be included in the payload of all ESB services. Copyright 
+	2014 OfficeDepot Inc. All rights reserved. -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:trx="http://www.officedepot.com/model/transaction"
+	targetNamespace="http://www.officedepot.com/model/transaction"
+	elementFormDefault="qualified" attributeFormDefault="unqualified"
+	version="20140319">
+	<xs:element name="transactionHeader"
+		type="trx:InternalTransactionHeaderWithHistoryType">
+		<xs:annotation>
+			<xs:documentation>The transactionHeader contains transaction-level
+				information. This header if for use for internal Office Depot
+				applications. </xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="publicTransactionHeaderRequest" type="trx:PublicTransactionHeaderRequestType">
+		<xs:annotation>
+			<xs:documentation>The transactionHeader contains transaction-level
+				information which should be sent on the service request. This header
+				if for use for non-Office Depot, external applications.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="publicTransactionHeaderResponse" type="trx:PublicTransactionHeaderResponseType">
+		<xs:annotation>
+			<xs:documentation>The transactionHeader contains transaction-level
+				information which will be sent back on the service response. This
+				header should exist for all ESB messages. </xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="ConsumerType">
+		<xs:annotation>
+			<xs:documentation>The consumer is the most recent "caller" of the ESB
+				service. This information must be populated by the application that
+				calls the ESB.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="consumerName" type="trx:ConsumerNameType">
+				<xs:annotation>
+					<xs:documentation>The consumer name is the source consume
+						application, in title-case format, such as MY_ORDER_APPLICATION.
+						The value of this field is populated by the consumer appplication,
+						but is predefined and validated by the OSB. The value of this
+						field is unique across the enterprise.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="consumerTransactionID" type="trx:ConsumerTrackingIDType"
+				minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>This is an alpha-numeric code provided by the
+						calling application which uniquely identifies the individual
+						transaction. This is used primarily for troubleshooting. Although
+						optional, tt is highly recommended that the consumer application
+						populate this value. Example: e9319232-cf1d-4cd1-b00a-ef3977903c9b</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="consumerMachineAddress" type="trx:MachineAddressType"
+				minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>This is the IP address for the machine from which
+						the ESB service was called. Example: 127.0.0.1</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="altTrackingIDs" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>This is an ad-hoc set of key/value fields that
+						can be populated with information that maybe helpful for
+						troubleshooting. For example, a POS order may set the order number
+						as the consumer trackingID, but may add store and register number
+						to the altTrackingIDs. The data included here may be used in
+						reporting or routing, but should not be used in business logic
+						computations.</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence maxOccurs="3">
+						<xs:element name="dataKeys" type="trx:KeyAndValueType" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="clientRelease" type="trx:ClientReleaseType"
+				minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>This is the client application's current software
+						release. This should be populated when the possibility of a client
+						doing a slow rollout exists; the client may call the same service
+						from multiple software versions.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DocumentModelType">
+		<xs:annotation>
+			<xs:documentation>The document type contains meta-data describing the
+				contents of the message.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="modelName" type="trx:SenderNameType">
+				<xs:annotation>
+					<xs:documentation>This is the root-level canonical model used by
+						this service as either input or output. This value should be
+						title-case and predefinded in the format: MODEL.TYPE, where MODEL
+						defines the canonical schema, and the ".TYPE" is optionally used
+						to describe a specific "flavor" of the MODEL. Example:
+						ORDER.RETURN or SHIPPING_NOTICE.STANDARD.  </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="modelVersion" type="trx:VersionType">
+				<xs:annotation>
+					<xs:documentation>This is the version of the model (populated in
+						the model element above).  </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="EnvironmentType">
+		<xs:annotation>
+			<xs:documentation>This contains information perstaining to the
+				hardware environment in which the service operates.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="environmentName" type="trx:EnvironmentNameType"
+				minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>This is the name of the environment in which the
+						service runs. e.g. UAT or PROD</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="productVersion" type="trx:VersionType"
+				minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>This contains the release number for the ESB
+						product hosting the service.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="physicalHost" type="trx:PhysicalHostType"
+				minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>This is the name of the physical host machine on
+						which the service runs.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="domain" type="trx:DomainType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>This is the name of the domain in which the
+						service operates.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="cluster" type="trx:ClusterType"
+				minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>This is the name of the cluster in which the
+						service operates.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="serverName" type="trx:ServerNameType">
+				<xs:annotation>
+					<xs:documentation>This is the name of the managed server on which
+						the service runs.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="KeyAndValueType">
+		<xs:annotation>
+			<xs:documentation>A type containing a keyAndValue pair</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="key" type="trx:KeyType">
+				<xs:annotation>
+					<xs:documentation>This contains a label, unique amongst the
+						key/value types.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="value" type="trx:ValueType">
+				<xs:annotation>
+					<xs:documentation>This is a string value associated with they key.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="InternalTransactionHeaderType">
+		<xs:annotation>
+			<xs:documentation>This is the base internal Transaction type, from
+				which others extend.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="consumer" type="trx:ConsumerType">
+				<xs:annotation>
+					<xs:documentation>The consumer is the most recent "caller" of the
+						ESB service. This information must be populated by the application
+						that calls the ESB.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="serviceBus" type="trx:ServiceBusType"
+				minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>This is information about the transaction that is
+						only populated by the ESB.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="InternalTransactionHeaderWithHistoryType">
+		<xs:annotation>
+			<xs:documentation>This is an extension of the
+				InternalTransactionHeaderType which includes history.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="consumer" type="trx:ConsumerType">
+				<xs:annotation>
+					<xs:documentation>The consumer is the most recent "caller" of the
+						ESB service. This information must be populated by the application
+						that calls the ESB.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="serviceBus" type="trx:ServiceBusHistoryType"
+				minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>This is information about the transaction that is
+						only populated by the ESB.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="InvocationType">
+		<xs:annotation>
+			<xs:documentation>This contains information about how the service
+				received the request.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="URI" type="trx:URIType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>This is the URI of the service entrypoint called
+						by the consumer. Examples:
+						http://odp-prod-services:8080/Services/MyService,
+						file://MyShare/MyFile, mq:/MyQueue?manager=MQManagerName,
+						jms:queueName</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="headerFields" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>This is a collection of key/value pairs that can
+						capture useful, protocol-specific information, such as an http
+						header method or an MQ message ID</xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:sequence maxOccurs="unbounded">
+						<xs:element name="keyValuePairs" type="trx:KeyAndValueType" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="RoutingType">
+		<xs:annotation>
+			<xs:documentation>This contains information required for content
+				routing. This should be populated if a canonical model is being
+				used.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="consumerIsESB" type="trx:ESBInitiatedType">
+				<xs:annotation>
+					<xs:documentation>Set to true if the consumer calling this service
+						is an ESB service or orchestration</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="dynamicRouting" type="trx:DynamicRoutingType"
+				minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>This contains additional information required to
+						perform inter-ESB routing based upon the transaction header.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SecurityType">
+		<xs:annotation>
+			<xs:documentation>This contains information pertaining to how the
+				consumer authorizes with the ESB when placing a service call.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="authorizationID" type="trx:AuthorizationIDType"
+				minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>The ID upon which the consumer performed
+						authentication.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="certificateSerialNumber" type="trx:SerialNumberType"
+				minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>If the consumer is using a client-side
+						certificate, this is the cert's serial number.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ServiceBusHistoryType">
+		<xs:annotation>
+			<xs:documentation>This is an extension of the ServiceBusType that
+				includes historical transaction headers</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="trx:ServiceBusType">
+				<xs:sequence>
+					<xs:element name="history" type="trx:TransactionHistoryType"
+						minOccurs="0" />
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="ServiceBusType">
+		<xs:annotation>
+			<xs:documentation>This is information about the transaction that is
+				only populated by the ESB.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="correlationID" type="trx:CorrelationIDType"
+				minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>This ia a globally unique transaction ID that is
+						populated by the ESB. It is used to track messages across
+						different services. Example: e9319232-cf1d-4cd1-b00a-ef3977903c9b</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="timeReceived" type="trx:MessageDateTimeType"
+				minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>This is the date and time when the ESB received
+						the message. This should be populated by the bus on the response
+						only.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="service" type="trx:ServiceType">
+				<xs:annotation>
+					<xs:documentation>This type contains convenience information
+						identifying the service.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="document" type="trx:TransactionDocumentType">
+				<xs:annotation>
+					<xs:documentation>The document type contains meta-data describing
+						the contents of the message.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="routing" type="trx:RoutingType"
+				minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>This contains information required for content
+						routing. This should be populated if a canonical model is being
+						used.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="invocation" type="trx:InvocationType"
+				minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>This contains information about how the service
+						received the request.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="security" type="trx:SecurityType"
+				minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>This contains information pertaining to how the
+						consumer authorizes with the ESB when placing a service call.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="environment" type="trx:EnvironmentType"
+				minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>This contains information perstaining to the
+						hardware environment in which the service operates. This should be
+						populated on the response.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ServiceType">
+		<xs:annotation>
+			<xs:documentation>This type contains convenience information
+				identifying the service.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="serviceName" type="trx:ServiceNameType">
+				<xs:annotation>
+					<xs:documentation>This is the name of the service who received the
+						service request.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="serviceOperation" type="trx:ServiceOperationType">
+				<xs:annotation>
+					<xs:documentation>This is the operation on the service that was
+						executed upon receiving the service rquest.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="serviceVersion" type="trx:VersionType"
+				minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>This is the version of the service -- most often
+						the source control version label or ID for the code base
+						containing the service implementation.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TransactionDocumentType">
+		<xs:annotation>
+			<xs:documentation>The document type contains meta-data describing the
+				contents of the message.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="model" type="trx:DocumentModelType"
+				minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>This type contains information pertaining to the
+						key canonical model used by the service. It does not need to be
+						populated unless a canonical model is being used as either the
+						request or response payload (if sync). If the service is
+						transforming from one model to another, it should indicate the
+						inbound canonical.  </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="containsSensitiveData" type="trx:HasSensitiveDataType">
+				<xs:annotation>
+					<xs:documentation>This should be set to true if any confidental or
+						sensitive data is included in the payload (such data should be
+						encrypted).</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PublicTransactionHeaderRequestType">
+		<xs:annotation>
+			<xs:documentation>This contains information pertaining to how the
+				consumer authorizes with the ESB when placing a service call.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="consumer" type="trx:ConsumerType">
+				<xs:annotation>
+					<xs:documentation>The consumer is the most recent "caller" of the
+						ESB service. This information must be populated by the application
+						that calls the ESB.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PublicTransactionHeaderResponseType">
+		<xs:annotation>
+			<xs:documentation>This contains information pertaining to how the
+				consumer authorizes with the ESB when placing a service call.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="consumer" type="trx:ConsumerType">
+				<xs:annotation>
+					<xs:documentation>The consumer is the most recent "caller" of the
+						ESB service. This information must be populated by the application
+						that calls the ESB.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="correlationID" type="trx:CorrelationIDType">
+				<xs:annotation>
+					<xs:documentation>This ia a globally unique transaction ID that is
+						populated by the ESB. It is used to track messages across
+						different services. Example: e9319232-cf1d-4cd1-b00a-ef3977903c9b.
+						For troubleshooting purposes, it is highly recommened that the
+						consumer store or make record of the correlationID when possible.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TransactionHistoryType">
+		<xs:annotation>
+			<xs:documentation>The history type contains information about each
+				service invoked as a transaction winds its way through the ESB.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence maxOccurs="unbounded">
+			<xs:element name="transactionalHeader" type="trx:InternalTransactionHeaderType">
+				<xs:annotation>
+					<xs:documentation>The transaction information from a prior service
+						call for this transaction.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="AuthorizationIDType">
+		<xs:annotation>
+			<xs:documentation>This is the ID under which the ESB authorized the
+				service access.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="256" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ClientReleaseType">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="64" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ClusterType">
+		<xs:annotation>
+			<xs:documentation>This is the name of the cluster in which the
+				service operates.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="128" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ConsumerTrackingIDType">
+		<xs:annotation>
+			<xs:documentation>This is a consumer-provided, consumer-unique
+				transaction ID.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="128" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="CorrelationIDType">
+		<xs:annotation>
+			<xs:documentation>This is a ESB-provided, bus-unique transaction ID.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="128" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ConsumerNameType">
+		<xs:annotation>
+			<xs:documentation>This is the consumer source application which
+				called the ESB</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="128" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="DomainType">
+		<xs:annotation>
+			<xs:documentation>This is the name of the domain in which the service
+				operations.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="128" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="EnvironmentNameType">
+		<xs:annotation>
+			<xs:documentation>This is the name of the environment in which the
+				service runs. e.g. UAT or PROD</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="64" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ESBInitiatedType">
+		<xs:annotation>
+			<xs:documentation>True, if the consumer was an ESB service or
+				orchestration</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:boolean" />
+	</xs:simpleType>
+	<xs:simpleType name="HasSensitiveDataType">
+		<xs:annotation>
+			<xs:documentation>True, if the payload contains confidential or
+				sensitive data</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:boolean" />
+	</xs:simpleType>
+	<xs:simpleType name="KeyType">
+		<xs:annotation>
+			<xs:documentation>Key routing element in the message</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="64" />
+			<xs:minLength value="1" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="MachineAddressType">
+		<xs:annotation>
+			<xs:documentation>An IP address.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="20" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="MessageDateTimeType">
+		<xs:annotation>
+			<xs:documentation>This is a date/time associated with the message
+				(context defined at the element-level).</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:dateTime" />
+	</xs:simpleType>
+	<xs:simpleType name="PhysicalHostType">
+		<xs:annotation>
+			<xs:documentation>The name of the physical host machine.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="128" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="RoutingKeyType">
+		<xs:annotation>
+			<xs:documentation>This is a code that provides flow context. It
+				general describes how the service calls fits into a route (or
+				orchestration). Take care to not include specific application names
+				or destinations in the value. For example: SEND_INVOICE_TO_FINANCE
+				or TRANSFORM_B2C_ORDER.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="128" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="SenderNameType">
+		<xs:annotation>
+			<xs:documentation>Name for the document sender</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="128" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="SerialNumberType">
+		<xs:annotation>
+			<xs:documentation>This is a certificate's serial number. We're
+				limiting this to 50 characters, even though the spec allows for a
+				much, much larger length.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="64" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ServerNameType">
+		<xs:annotation>
+			<xs:documentation>This is the name of the managed server on which the
+				service runs.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="128" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ServiceNameType">
+		<xs:annotation>
+			<xs:documentation>This is the name of the service who received the
+				service request.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="512" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ServiceOperationType">
+		<xs:annotation>
+			<xs:documentation>This is the operation on the service that was
+				executed upon receiving the service rquest.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="512" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="URIType">
+		<xs:annotation>
+			<xs:documentation>a string representing a URL or URI</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="700" />
+			<xs:minLength value="0" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ValueType">
+		<xs:annotation>
+			<xs:documentation>This is a string value associated with a key within
+				a key/value pair</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="256" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="VersionType">
+		<xs:annotation>
+			<xs:documentation>A version number, generally in the format of
+				yyyymmdd</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="64" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="DynamicRoutingType">
+		<xs:sequence maxOccurs="unbounded">
+			<xs:element name="routingContext" type="trx:RoutingKeyType">
+				<xs:annotation>
+					<xs:documentation>This is a code that provides flow context. It
+						general describes how the service calls fits into a route (or
+						orchestration). Take care to not include specific application
+						names or destinations in the value. For example:
+						SEND_INVOICE_TO_FINANCE or TRANSFORM_B2C_ORDER.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

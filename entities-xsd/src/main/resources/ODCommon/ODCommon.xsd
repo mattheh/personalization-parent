@@ -1,0 +1,992 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" 
+	xmlns="http://eai.officedepot.com/model/ODCommon" 
+	xmlns:txn="http://www.officedepot.com/model/transaction" 
+	xmlns:odcommon="http://eai.officedepot.com/model/ODCommon" 
+	targetNamespace="http://eai.officedepot.com/model/ODCommon" 
+	elementFormDefault="qualified" 
+	attributeFormDefault="unqualified"
+	>
+	<xs:import namespace="http://www.officedepot.com/model/transaction" schemaLocation="../../../CommonFrameworkV2/resources/schemas/Transaction.xsd"/>
+	<xs:simpleType name="RegionNumberType">
+		<xs:annotation>
+			<xs:documentation>
+				Definition for region number
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="25"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="NotesType">
+		<xs:annotation>
+			<xs:documentation>
+				Definition for notes or comments
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+	<xs:simpleType name="StatusCodeType">
+		<xs:annotation>
+			<xs:documentation>
+				Definition for status code
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+	<xs:simpleType name="DescriptionType">
+		<xs:annotation>
+			<xs:documentation>
+				Definition for status description
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="256"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="NumberType">
+		<xs:annotation>
+			<xs:documentation>
+				Definition for order version
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:int">
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="StatusType">
+		<xs:annotation>
+			<xs:documentation>
+				Specifies status with code and description
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="statusCode" type="odcommon:StatusCodeType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						Represents status code
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="statusDescription" type="odcommon:DescriptionType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						Represents description corresponding to status
+						code
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="CurrencyCodeType">
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+	<xs:simpleType name="EncryptedValueType">
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+	<xs:complexType name="KeyValuePairType">
+		<xs:sequence>
+			<xs:element name="keyName" type="xs:string"/>
+			<xs:element name="keyValue" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="QueryStringType">
+		<xs:sequence>
+			<xs:element name="attrib" type="odcommon:KeyValuePairType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="queryString" type="odcommon:QueryStringType"/>
+	<xs:simpleType name="SequenceTypeType">
+		<xs:annotation>
+			<xs:documentation>Object Sequence type</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="BILLING_ADDRESS"/>
+			<xs:enumeration value="MAILING_ADDRESS"/>
+			<xs:enumeration value="SHIPPING_ADDRESS"/>
+			<xs:enumeration value="CONTACT"/>
+			<xs:enumeration value="EMAIL"/>
+			<xs:enumeration value="PHONE"/>
+			<xs:enumeration value="ADDRESS"/>
+			<xs:enumeration value="USER"/>
+			<xs:enumeration value="DEFAULT_BILLING_ADDRESS"/>
+			<xs:enumeration value="DEFAULT_SHIPPING_ADDRESS"/>
+			<xs:enumeration value="DEFAULT_MAILING_ADDRESS"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="RentOrOwnType">
+		<xs:annotation>
+			<xs:documentation>
+				RENT, OWN or OTHER
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="RENT"/>
+			<xs:enumeration value="OWN"/>
+			<xs:enumeration value="OTHER"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="TelephoneNumberType">
+		<xs:annotation>
+			<xs:documentation>
+				A structure that describes a telephone number that can
+				be dialed to reach a contact.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="areaCode" type="AreaCodeType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						A dialing code for a state or province for phone
+						numbers.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="countryCode" type="CountryCodeType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						An international dialing code for a country.
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="phoneNumber" type="PhoneNumberType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						The telephone number for the
+						contact/organization
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="extension" type="TelephoneExtensionType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						The telephone number extension for the
+						contact/organization
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="AreaCodeType">
+		<xs:annotation>
+			<xs:documentation>
+				A dialing code for a state or province for phone
+				numbers.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="8"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="CountryCodeType">
+		<xs:annotation>
+			<xs:documentation>
+				An international dialing code for a country.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+	<xs:simpleType name="PhoneNumberType">
+		<xs:annotation>
+			<xs:documentation>
+				The type of communication number listed for an
+				individual.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="16"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="TelephoneExtensionType">
+		<xs:annotation>
+			<xs:documentation>
+				The telephone number extension for the
+				contact/organization
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="8"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="TelephoneNumberTypeType">
+		<xs:annotation>
+			<xs:documentation>
+				The type of communication number listed for an
+				individual.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:token">
+			<xs:enumeration value="Fax"/>
+			<xs:enumeration value="Emergency 1"/>
+			<xs:enumeration value="Emergency 2"/>
+			<xs:enumeration value="Home"/>
+			<xs:enumeration value="Mobile"/>
+			<xs:enumeration value="Other"/>
+			<xs:enumeration value="Unlisted"/>
+			<xs:enumeration value="Work"/>
+			<xs:enumeration value="WPH"/>
+			<xs:enumeration value="WFX"/>
+			<xs:enumeration value="TXT"/>
+			<xs:enumeration value="HFX"/>
+			<xs:enumeration value="HMB"/>
+			<xs:enumeration value="HPG"/>
+			<xs:enumeration value="HPH"/>
+			<xs:enumeration value="WMB"/>
+			<xs:enumeration value="WPG"/>
+			<xs:enumeration value="Billing"/>
+			<xs:enumeration value="Business"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="EventActionType">
+		<xs:annotation>
+			<xs:documentation>
+				Data Event Action Type - Create, Update,Delete,Notify ..
+				etc.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="15"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="BaseDataEventType">
+		<xs:sequence>
+			<xs:element ref="txn:transactionHeader"/>
+			<xs:element name="eventNotificationTime" type="xs:dateTime"/>
+			<xs:element name="eventTime" type="xs:dateTime"/>
+			<xs:element name="eventAction" type="EventActionType"/>
+			<xs:element name="eventInstigator" type="xs:string" minOccurs="0"/>
+			<xs:element name="eventSource" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="BaseMeasurementType">
+		<xs:annotation>
+			<xs:documentation>
+				Definition of base measurement type at Office Depot
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="unit" type="xs:string"/>
+			<xs:element name="value" type="xs:decimal"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="IDType">
+		<xs:annotation>
+			<xs:documentation>ID Type</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+	<xs:complexType name="SequenceType">
+		<xs:sequence>
+			<xs:element name="type" type="SequenceTypeType"/>
+			<xs:element name="number" type="xs:int"/>
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:simpleType name="MessageTypeType">
+		<xs:annotation>
+			<xs:documentation>Message type</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+	<xs:simpleType name="RSALabelType">
+		<xs:annotation>
+			<xs:documentation>
+				Security key label for lookup
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+	<xs:complexType name="FinanicalAmountType">
+		<xs:sequence>
+			<xs:element name="currencyCode" type="odcommon:CurrencyCodeType"/>
+			<xs:element name="amount" type="xs:decimal"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="PasswordType">
+		<xs:annotation>
+			<xs:documentation>Definition for password</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+	<xs:element name="password" type="PasswordType"/>
+	<xs:complexType name="CredentialsType">
+		<xs:sequence>
+			<xs:element name="userName" type="xs:string"/>
+			<xs:element ref="password"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="DateOfBirthType">
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+	<xs:simpleType name="CouponCodeType">
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+	<xs:element name="dateOfBirth" type="DateOfBirthType"/>
+	<xs:simpleType name="URIType">
+		<xs:annotation>
+			<xs:documentation>
+				a string representing a URL or URI
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+	<xs:simpleType name="AlphaNumericType">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="([0-9A-Za-z])*"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="AlphabetOnlyType">
+		<xs:restriction base="AlphaNumericType">
+			<xs:pattern value="([A-Za-z])*"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="LanguageCodeType">
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+	<xs:complexType name="PersonType">
+		<xs:sequence>
+			<xs:element name="personName" type="PersonNameType" minOccurs="0"/>
+			<xs:element name="personTitle" type="PersonTitleType" minOccurs="0"/>
+			<xs:element name="phones" type="PhonesType" minOccurs="0"/>
+			<xs:element name="fax" type="PhonesType" minOccurs="0"/>
+			<xs:element name="emails" type="EmailsType" minOccurs="0"/>
+			<xs:element name="addresses" type="AddressesType" minOccurs="0"/>
+			<xs:element name="gender" type="GenderType" minOccurs="0"/>
+			<xs:element name="birthDate" type="DateOfBirthType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PersonNameType">
+		<xs:annotation>
+			<xs:documentation>This is a complex type representing an individual's name</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="firstName" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>a person's given name</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="middleName" type="xs:string" minOccurs="0"/>
+			<xs:element name="lastName" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>a person's surname</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="fullName" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>a person's full name</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="EmailAddressType">
+		<xs:annotation>
+			<xs:documentation>definition for an email, in the format: local-part@domain</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+	<xs:simpleType name="IsPrimaryType">
+		<xs:annotation>
+			<xs:documentation>a flag to if an element is given special preference by the customer</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:boolean"/>
+	</xs:simpleType>
+	<xs:complexType name="EmailAssociationType">
+		<xs:annotation>
+			<xs:documentation>Email information</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="emailType" type="EmailTypeType" minOccurs="0"/>
+			<xs:element name="emailAddress" type="EmailAddressType" minOccurs="0"/>
+			<xs:element name="isPrimary" type="IsPrimaryType" default="false" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						true, if the owner of the email would like to
+						use this email as a default whenever possible.
+						Default is FALSE
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AddressType">
+		<xs:annotation>
+			<xs:documentation>OfficeDepot standard definition for an address.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="deliveryName" type="DeliveryNameType" minOccurs="0"/>
+			<xs:element name="addressLine1" type="AddressLineType" minOccurs="0"/>
+			<xs:element name="addressLine2" type="AddressLine2Type" minOccurs="0"/>
+			<xs:element name="addressLine3" type="AddressLine2Type" minOccurs="0"/>
+			<xs:element name="city" type="CityType" minOccurs="0"/>
+			<xs:element name="state" type="StateNameType" minOccurs="0"/>
+			<xs:element name="stateAbbreviation" type="StateAbrType" minOccurs="0"/>
+			<xs:element name="postalCode" type="PostalCodeType" minOccurs="0"/>
+			<xs:element name="country" default="US" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="CountryMailingCodeType"/>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element name="latitude" type="LatLongType" minOccurs="0"/>
+			<xs:element name="longitude" type="LatLongType" minOccurs="0"/>
+			<xs:element name="isResidential" type="IsResidentialType" default="true" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>true, if the address pertains to a residence</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="county" type="CountyType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>county code</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="district" type="DistrictType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>definition for a district</xs:documentation>
+				</xs:annotation>
+			</xs:element>			
+			<xs:element name="specialNote" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DeliveryNameType">
+		<xs:annotation>
+			<xs:documentation>an individual or company associated with an address</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="deliveryName1" type="DeliveryNameSimpleType" minOccurs="0"/>
+			<xs:element name="deliveryName2" type="DeliveryNameSimpleType" minOccurs="0"/>
+			<xs:element name="deliveryName3" type="DeliveryNameSimpleType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="AddressLineType">
+		<xs:annotation>
+			<xs:documentation>definition for a line on an address</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+	<xs:simpleType name="AddressLine2Type">
+		<xs:annotation>
+			<xs:documentation>OfficeDepot standard definition for an additional line on an address</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+	<xs:simpleType name="CityType">
+		<xs:annotation>
+			<xs:documentation>definition for a city</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+	<xs:simpleType name="CompanyNameSimpleType">
+		<xs:annotation>
+			<xs:documentation>The name of a business or organization</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+	<xs:simpleType name="CompanyLegalNameSimpleType">
+		<xs:annotation>
+			<xs:documentation>The full legal name of a business or organization (if doing business as alias)</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+	<xs:simpleType name="CountryMailingCodeType">
+		<xs:annotation>
+			<xs:documentation>definition for an ISO 639-2 Country Code.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+	<xs:simpleType name="CountyType">
+		<xs:annotation>
+			<xs:documentation>definition for a county</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+	<xs:simpleType name="DeliveryNameSimpleType">
+		<xs:annotation>
+			<xs:documentation>the name of the individual or company who would receive deliveries to this address</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+	<xs:simpleType name="DistrictType">
+		<xs:annotation>
+			<xs:documentation>definition for a district</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+	<xs:simpleType name="IsResidentialType">
+		<xs:annotation>
+			<xs:documentation>a flag to determine if an address is a residences (as opposed to a business)</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:boolean"/>
+	</xs:simpleType>
+	<xs:simpleType name="LatLongType">
+		<xs:annotation>
+			<xs:documentation>definition for the lattitude or longitude of a geographic coordinate as a decimal, such as +32.30642 or -122.61458</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:decimal"/>
+	</xs:simpleType>
+	<xs:simpleType name="PostalCodeType">
+		<xs:annotation>
+			<xs:documentation>definition for a pzip code. Exceptable formats are 12345, 123451234 or 12345-1234.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+	<xs:simpleType name="StateAbrType">
+		<xs:annotation>
+			<xs:documentation>definition for a 2 character US State abbreviation and ability for 3 char for Canada.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+	<xs:simpleType name="StateNameType">
+		<xs:annotation>
+			<xs:documentation>definition for the full name of a US State </xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+	<xs:simpleType name="GenderType">
+		<xs:annotation>
+			<xs:documentation>definition for an individual's gender: (M)ale or (F)emale.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+	<xs:complexType name="CompanyIdentityType">
+		<xs:annotation>
+			<xs:documentation>information about the company</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="businessName" type="CompanyNameSimpleType"
+				minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						The name of the company
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="companyLegalName"
+				type="CompanyLegalNameSimpleType" minOccurs="0" />
+			<xs:element name="inBusinessSinceYear" type="xs:integer"
+				minOccurs="0" />
+			<xs:element name="businessAddress" type="AddressType"
+				minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						the main office of the company which may differ
+						from the billTo and ShipTo addresses
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="billingAddress" type="AddressType"
+				minOccurs="0" />
+			<xs:element name="telephone" type="PhonesType" minOccurs="0"
+				maxOccurs="unbounded" />
+			<xs:element name="fax" type="PhonesType" minOccurs="0"
+				maxOccurs="unbounded" />
+			<xs:element name="email" type="EmailAssociationType"
+				minOccurs="0" maxOccurs="unbounded" />
+	</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TaxExemptType">
+		<xs:sequence>
+			<xs:element name="taxExemptFlag" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:complexType name="PersonDemographicType">
+		<xs:sequence>
+			<xs:element name="ssn" type="SSNType" minOccurs="0"/>
+			<xs:element name="annualIncome" type="AmountType" minOccurs="0"/>
+			<xs:element name="otherAnnualIncomeAmount" type="AmountType" minOccurs="0"/>
+			<xs:element name="housing" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="monthlyRent" type="AmountType" minOccurs="0"/>
+						<xs:element name="rentOrOwn" type="RentOrOwnType" minOccurs="0">
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="photoIdDetails" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="photoIdNumber" type="PhotoIdNumberType" minOccurs="0"/>
+						<xs:element name="photoIdStateCode" type="StateAbrType" minOccurs="0"/>
+						<xs:element name="photoIdType" type="PhotoIdTypeType" minOccurs="0"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="PhotoIdNumberType">
+		<xs:annotation>
+			<xs:documentation>Photo ID Number </xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+	<xs:simpleType name="PhotoIdTypeType">
+		<xs:annotation>
+			<xs:documentation>DL-Drivers license, passport, other</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+	<xs:complexType name="SignatureDetailsType">
+		<xs:sequence>
+			<xs:element name="signatureIncluded" type="xs:boolean" minOccurs="0"/>
+			<xs:element name="imageId" type="xs:string" minOccurs="0"/>
+			<xs:element name="imageType" type="xs:string" minOccurs="0"/>
+			<xs:element name="imageFormat" type="xs:string" minOccurs="0"/>
+			<xs:element name="imageSize" type="xs:integer" minOccurs="0"/>
+			<xs:element name="signatureImage" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CompanyDUNSType">
+		<xs:sequence>
+			<xs:element name="annualRevenue" type="xs:double" minOccurs="0"/>
+			<xs:element name="employeeCount" type="xs:integer" minOccurs="0"/>
+			<xs:element name="taxPayerId" type="xs:integer" minOccurs="0"/>
+			<xs:element name="dunsCode" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="TelephoneAssociationType">
+		<xs:sequence>
+			<xs:element name="phoneType" type="TelephoneNumberTypeType" minOccurs="0"/>
+			<xs:element name="phone" type="TelephoneNumberType" minOccurs="0"/>
+			<xs:element name="isPrimary" type="IsPrimaryType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="AddressTypeType">
+		<xs:annotation>
+			<xs:documentation>
+				The type of address listed for an
+				individual.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:token">
+			<xs:enumeration value="BILLING_ADDRESS"/>
+			<xs:enumeration value="MAILING_ADDRESS"/>
+			<xs:enumeration value="SHIPPING_ADDRESS"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="AddressAssociationType">
+		<xs:sequence>
+			<xs:element name="addressType" type="AddressTypeType" minOccurs="0"/>
+			<xs:element name="address" type="AddressType" minOccurs="0"/>
+			<xs:element name="isPrimary" type="IsPrimaryType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="SSNType">
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+	<xs:complexType name="EmailsType">
+		<xs:sequence>
+			<xs:element name="emailAssociation" type="EmailAssociationType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="BaseDeliveryDocumentType">
+		<xs:annotation>
+			<xs:documentation>Definition of base delivery document type at Office Depot</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="templateName" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Name of the document template: Invoice, Packing slip and etc...</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="documentFormat" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Document format PDF, TXT and etc...</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="documentName" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Name of the document to be delivered</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="requestDate" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Document delivery request date</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="documentMetadata" type="odcommon:KeyValuePairsType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Metadata about delivery document  represented  as (key, kalue) pairs</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="KeyValuePairsType">
+		<xs:annotation>
+			<xs:documentation>Sequence of Key Value Pairs</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="keyValuePairs" type="odcommon:KeyValuePairType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PhonesType">
+		<xs:sequence>
+			<xs:element name="phoneAssociation" type="TelephoneAssociationType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AddressesType">
+		<xs:sequence>
+			<xs:element name="addressAssociation" type="AddressAssociationType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="BarcodeType">
+		<xs:annotation>
+			<xs:documentation>Represents Barcode</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="checkValue" type="xs:string"
+				minOccurs="0" />			
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:simpleType name="EmailTypeType">
+		<xs:annotation>
+			<xs:documentation>
+				The type of email address listed for an
+				individual.
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:token">
+			<xs:enumeration value="PERSONAL"/>
+			<xs:enumeration value="WORK"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="BaseLookupResultSummaryType">
+		<xs:sequence>
+			<xs:element name="totalFound" type="xs:integer" minOccurs="0"/>
+			<xs:element name="totalNotFound" type="xs:integer" minOccurs="0"/>
+			<xs:element name="errorCode" type="xs:string" minOccurs="0"/>
+			<xs:element name="errorMessage" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="BaseGeoType">
+		<xs:sequence>
+			<xs:element name="geoCode" type="xs:string" minOccurs="0"/>
+			<xs:element name="geoName" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PersonTitleType">
+		<xs:annotation>
+			<xs:documentation>Represents Person Title Definition</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="salutation" type="SalutationType" minOccurs="0"/>
+			<xs:element name="jobTitle" type="JobTitleType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="SalutationType">
+		<xs:annotation>
+			<xs:documentation>a salutation for an individual, as when addressed in a letter</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+	<xs:simpleType name="JobTitleType">
+		<xs:annotation>
+			<xs:documentation>definition for an individual's acedemic (e.g. Prof.) or professional (e.g. Dr.) title.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+
+	<xs:complexType name="TaxType">
+		<xs:sequence>
+			<xs:element name="taxIdType" type="TaxIdTypeType" minOccurs="0"></xs:element>
+			<xs:element name="taxIdStatus" type="TaxIdStatusType" minOccurs="0"></xs:element>
+			<xs:element name="taxSubType" type="TaxSubType" minOccurs="0"></xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	
+	
+	
+	<xs:simpleType name="TaxIDType">
+		<xs:annotation>
+			<xs:documentation>definition for Tax ID.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="30"/>
+		</xs:restriction>
+	</xs:simpleType>
+	
+    <xs:simpleType name="TaxIdTypeType">
+    	<xs:restriction base="xs:string"></xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="TaxIdStatusType">
+    	<xs:restriction base="xs:string"></xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="TaxSubType">
+    	<xs:restriction base="xs:string"></xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="AmountType">
+    	<xs:restriction base="xs:double"></xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="QuantityType">
+		<xs:restriction base="xs:integer"></xs:restriction>
+	</xs:simpleType>
+
+    <xs:simpleType name="RetailChannelType">
+    	<xs:restriction base="xs:string">
+    		<xs:enumeration value="STORE"></xs:enumeration>
+    		<xs:enumeration value="ONLINE_DIRECT"></xs:enumeration>
+    		<xs:enumeration value="ONLINE_BSD"></xs:enumeration>
+		<xs:enumeration value="ONLINE"></xs:enumeration>
+    	</xs:restriction>
+    </xs:simpleType>
+    
+    <xs:simpleType name="PercentType">
+		<xs:annotation>
+			<xs:documentation>definition for percent type</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:double"/>
+	</xs:simpleType>
+
+    <xs:complexType name="LocationType">
+    	<xs:sequence>
+    		<xs:element name="id" type="LocationIDType" minOccurs="0"></xs:element>
+    		<xs:element name="type" type="LocationTypeType" minOccurs="0"></xs:element>
+    		<xs:element name="name" type="LocationNameType" minOccurs="0"></xs:element>
+            <xs:element name="address" type="AddressType" minOccurs="0" maxOccurs="1"></xs:element>
+        </xs:sequence>
+    </xs:complexType>
+
+    <xs:simpleType name="LocationTypeType">
+    	<xs:annotation>
+			<xs:documentation>
+				Identifies location Type
+			</xs:documentation>
+		</xs:annotation>
+    	<xs:restriction base="xs:string"></xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="LocationNameType">
+    	<xs:annotation>
+			<xs:documentation>
+				Identifies location name
+			</xs:documentation>
+		</xs:annotation>
+    	<xs:restriction base="xs:string"></xs:restriction>
+    </xs:simpleType>
+    
+	<xs:simpleType name="LocationIDType">
+		<xs:annotation>
+			<xs:documentation>
+				Identifies location id
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="IDType"></xs:restriction>
+	</xs:simpleType>
+	
+	<xs:complexType name="PaymentTermType">
+		<xs:annotation>
+			<xs:documentation>Identifies the payment term of the associated entity</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="paymentTermId" type="PaymentTermIdType" minOccurs="0" />
+			<xs:element name="paymentTermCode" type="PaymentTermCodeType" minOccurs="0"></xs:element>
+			<xs:element name="paymentGroup" type="PaymentGroupType" minOccurs="0"></xs:element>
+			<xs:element name="paymentBasisCode" type="PaymentBasisCodeType" minOccurs="0" />
+			<xs:element name="paymentDuration" type="PaymentDurationType" minOccurs="0" />
+			<xs:element name="paymentFrequency" type="PaymentFrequencyType" minOccurs="0" />
+			<xs:element name="discount" type="PercentType" minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+	
+	<xs:simpleType name="PaymentTermIdType">
+		<xs:annotation>
+			<xs:documentation>Identifies the Payment Terms of the associated entity</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+	
+	<xs:simpleType name="PaymentTermCodeType">
+		<xs:annotation>
+			<xs:documentation>Identifies the Payment Term Code of the associated entity</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+	
+	<xs:simpleType name="PaymentGroupType">
+		<xs:annotation>
+			<xs:documentation>Identifies the Payment Term Code of the associated entity</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+	
+	<xs:simpleType name="PaymentBasisCodeType">
+		<xs:annotation>
+			<xs:documentation>Identifies the Payment Basis of the associated entity</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+	
+	<xs:simpleType name="PaymentDurationType">
+		<xs:annotation>
+			<xs:documentation>Identifies the Payment Duration of the associated entity</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>
+	
+	<xs:simpleType name="PaymentFrequencyType">
+		<xs:annotation>
+			<xs:documentation>Identifies the Payment Frequency of the associated entity</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string"/>
+	</xs:simpleType>	
+	    
+
+	<xs:complexType name="DimensionType">
+        <xs:annotation>
+        	<xs:documentation>Dimension properties</xs:documentation>
+        </xs:annotation>
+        <xs:sequence>
+			<xs:element name="length" type="BaseMeasurementType"
+				minOccurs="0">
+                <xs:annotation>
+                	<xs:documentation>Length dimension</xs:documentation>
+                </xs:annotation>
+			</xs:element>
+			<xs:element name="width" type="BaseMeasurementType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Width dimension</xs:documentation>
+				</xs:annotation></xs:element>
+			<xs:element name="height" type="BaseMeasurementType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Height dimension</xs:documentation>
+				</xs:annotation></xs:element>
+		</xs:sequence>
+	</xs:complexType>
+
+
+	<xs:simpleType name="UnitOfMeasureType">
+		<xs:restriction base="xs:string"></xs:restriction>
+	</xs:simpleType>
+
+
+	<xs:simpleType name="BatterySizesType">
+        <xs:annotation>
+        	<xs:documentation>D, C, AA, AAA, AAAA, A23, 9-volt, CR2032, LR44, etc</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:string"></xs:restriction>
+	</xs:simpleType>
+	
+	<xs:complexType name="BatterySetType">
+    	<xs:sequence>
+    		<xs:element name="batterySize"
+    			type="BatterySizesType" minOccurs="0">
+    		</xs:element>
+    		<xs:element name="quantityRequired" type="QuantityType" minOccurs="0"></xs:element>
+    	</xs:sequence>
+    </xs:complexType>
+
+	<xs:simpleType name="SystemClassifierType">
+		<xs:annotation>
+			<xs:documentation>Type to represent OfficeDepotSouth vs OfficeDepotNorth entities.
+ODP - Office Depot South
+OMX - Office Depot North
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+
+
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>
