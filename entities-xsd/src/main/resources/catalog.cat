@@ -1,0 +1,4 @@
+REWRITE_SYSTEM "../ODCommon/Inventory.xsd" "src/main/resources/ODCommon/Inventory.xsd"
+REWRITE_SYSTEM "../ODCommon/Supplier.xsd" "src/main/resources/ODCommon/Supplier.xsd"
+REWRITE_SYSTEM "../ODCommon/ODCommon.xsd" "src/main/resources/ODCommon/ODCommon.xsd"
+REWRITE_SYSTEM "../CommonFrameworkV2/Transaction.xsd" "src/main/resources/CommonFrameworkV2/Transaction.xsd"

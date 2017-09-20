@@ -1,0 +1,1036 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema"
+	targetNamespace="http://eai.officedepot.com/model/Supplier"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema"
+	xmlns:tns="http://eai.officedepot.com/model/Supplier"
+	xmlns:odcommon="http://eai.officedepot.com/model/ODCommon"
+	elementFormDefault="qualified"
+	xmlns:inventory="http://eai.officedepot.com/model/Inventory"
+	>
+    <import schemaLocation="Inventory.xsd" namespace="http://eai.officedepot.com/model/Inventory"></import>
+    <xs:import namespace="http://eai.officedepot.com/model/ODCommon"
+		schemaLocation="ODCommon.xsd" />
+	<complexType name="SupplierType">
+		<xs:annotation>
+			<xs:documentation>
+				Identifies attributes belonging to supplier. Supplier
+				has a relationship to supplier sites.
+			</xs:documentation>
+		</xs:annotation>
+		<sequence>
+			<element name="supplierId" type="tns:SupplierIDType"
+				minOccurs="0">
+			</element>
+			<element name="supplierReferenceNumber"
+				type="odcommon:KeyValuePairsType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						To set GSO reference number for supplier, use
+						'GSO' for key and provide number in value field
+					</xs:documentation>
+				</xs:annotation>
+			</element>
+			<element name="supplierCompanyIdentity"
+				type="odcommon:CompanyIdentityType" minOccurs="0">
+			</element>
+			<element name="supplierContacts"
+				type="tns:SupplierContactAssociationType" minOccurs="0">
+			</element>
+			<element name="supplierSites" minOccurs="0"
+				maxOccurs="unbounded">
+				<complexType>
+					<sequence>
+						<element name="supplierSite" type="tns:SiteType"
+							minOccurs="0" maxOccurs="unbounded">
+						</element>
+					</sequence>
+				</complexType>
+			</element>
+			<element name="businessClassification" type="tns:BusinessClassificationType" minOccurs="0"></element>
+		</sequence>
+	</complexType>
+
+	<complexType name="SiteType">
+        <annotation>
+        	<documentation>Identifies supplier site level details</documentation>
+        </annotation>
+        <sequence>
+        	<element name="siteId" type="tns:SiteIDType"
+        		minOccurs="0">
+        	</element>
+        	<element name="siteReferenceNumber"
+        		type="odcommon:KeyValuePairsType" minOccurs="0">
+        		<annotation>
+        			<documentation>
+        				To set GSO reference number for site, use 'GSO'
+        				for key and provide number in value field
+        			</documentation>
+        		</annotation>
+        	</element>
+        	<element name="siteLocation" type="odcommon:LocationType"
+        		minOccurs="0" maxOccurs="1">
+        	</element>
+        	<element name="email" type="odcommon:EmailAssociationType"
+        		maxOccurs="unbounded" minOccurs="0">
+        	</element>
+        	<element name="supplier" type="tns:SupplierType" maxOccurs="1" minOccurs="0"></element>
+        	<element name="supplierRelationship"
+        		type="tns:SupplierRelationshipType" minOccurs="0">
+        	</element>
+        </sequence>
+	</complexType>
+
+	
+
+	
+
+
+	<xs:complexType name="SupplierRelationshipType">
+		<xs:annotation>
+			<xs:documentation>
+				Identifies attributes belonging to supplier site
+			</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="isPrimaryPaySite"
+				type="tns:IsPrimaryPaySiteType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						primary pay site indicator
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="isRFQSite" type="tns:IsRFQSiteType"
+				minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						RFQ site indicator
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="isARAttention"
+				type="tns:IsARAttentionType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						AR attention indicator
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="currencyCode"
+				type="odcommon:CurrencyCodeType" minOccurs="0" />
+			<xs:element name="languageCode"
+				type="odcommon:LanguageCodeType" minOccurs="0" />
+			<xs:element name="inventoryTypeCode"
+				type="tns:InventoryTypeCodeType" minOccurs="0" />
+
+
+
+			<!-- Review   -->
+			<xs:element name="paymentTerm" type="odcommon:PaymentTermType" minOccurs="0"/>
+
+
+
+
+			<xs:element name="freightTermCode"
+				type="tns:FreightTermCodeType" minOccurs="0" />
+			<xs:element name="handlingCode" type="tns:HandlingCodeType"
+				minOccurs="0" />
+			<xs:element name="isDebitMemoAllowed"
+				type="tns:IsDebitMemoAllowedType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						Debit memo indicator
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="categoryCode" type="tns:CategoryCodeType"
+				minOccurs="0" />
+			<xs:element name="leadTimeDuration"
+				type="tns:LeadTimeDurationType" minOccurs="0" />
+			<xs:element name="isBackOrdered"
+				type="tns:IsBackOrderedType" minOccurs="0" />
+			<xs:element name="deliveryPolicyCode"
+				type="tns:DeliveryPolicyCodeType" minOccurs="0" />
+			<xs:element name="prePaidMinimumCode"
+				type="tns:PrePaidMinimumCodeType" minOccurs="0" />
+			<xs:element name="vendorMinimumAmount"
+				type="tns:VendorMinimumAmountType" minOccurs="0" />
+			<xs:element name="isVerticalMarket"
+				type="tns:IsVerticalMarketType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						vertical market indicator
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="isAutoReceiptAllowed"
+				type="tns:IsAutoReceiptAllowedType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						auto receipt indicator
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="etfSettleDuration"
+				type="tns:ETFSettleDurationType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						ETF settle duration
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="minorityBusinessCode"
+				type="tns:MinorityBusinessCodeType" minOccurs="0" />
+			<xs:element name="minorityBusinessCategoryCode"
+				type="tns:MinorityBusinessCategoryCodeType" minOccurs="0" />
+			<xs:element name="isPickPack" type="tns:IsPickPackType"
+				minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						Pick pack indicator
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="isCombinePickTicket"
+				type="tns:IsCombinePickTicketType" minOccurs="0" />
+			<xs:element name="officeDepotSignedDateTime"
+				type="tns:OfficeDepotSignedDateTimeType" minOccurs="0" />
+			<xs:element name="vendorSignedDateTime"
+				type="tns:VendorSignedDateTimeType" minOccurs="0" />
+			<xs:element name="isDeductFromInvoice"
+				type="tns:IsDeductFromInvoiceType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						deduct from invoice indicator
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="isNewStore" type="tns:IsNewStoreType"
+				minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						new store indicator
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="newStoreTerms"
+				type="tns:NewStoreTermsType" minOccurs="0" />
+			<xs:element name="isSeasonal" type="tns:IsSeasonalType"
+				minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						seasonal indicator
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="seasonalTerms"
+				type="tns:SeasonalTermsType" minOccurs="0" />
+
+
+
+
+			<!-- REVIEW <xs:element name="effectiveTimePeriod" type="core:TimePeriodType" minOccurs="0"/>  -->
+
+
+
+
+			<xs:element name="isLateShip" type="tns:IsLateShipType"
+				minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						late ship indicator
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="isPermanentRGA"
+				type="tns:IsPermanentRGAType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						permanent RGA indicator
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="isRGAMark" type="tns:IsRGAMarkType"
+				minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						RGA mark indicator
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="destroyAllowAmount"
+				type="tns:DestroyAllowAmountType" minOccurs="0" />
+			<xs:element name="damageDestroyLimitAmount"
+				type="tns:DamageDestroyLimitAmountType" minOccurs="0" />
+			<xs:element name="isRemovePriceSticker"
+				type="tns:IsRemovePriceStickerType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						remove price sticker indicator
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="isContactForRGA"
+				type="tns:IsContactForRGAType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						contact for RGA indicator
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="isDestroy" type="tns:IsDestroyType"
+				minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						destroy indicator
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="isSerialControl"
+				type="tns:IsSerialControlType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						serial control indicator
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="isObsoleteItem"
+				type="tns:IsObsoleteItemType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>
+						obsolete item indicator
+					</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="obsoleteAllowancePercent"
+				type="tns:ObsoleteAllowancePercentType" minOccurs="0" />
+			<xs:element name="obsoleteAllowanceDuration"
+				type="tns:ObsoleteAllowanceDurationType" minOccurs="0" />
+
+			<xs:element name="rtv" type="tns:RTVType" minOccurs="0" />
+
+			<xs:element name="usesEDI810" type="tns:UsesEDIType"
+				minOccurs="0" />
+			<xs:element name="usesEDI820" type="tns:UsesEDIType"
+				minOccurs="0" />
+			<xs:element name="usesEDI832" type="tns:UsesEDIType"
+				minOccurs="0" />
+			<xs:element name="usesEDI846" type="tns:UsesEDIType"
+				minOccurs="0" />
+			<xs:element name="usesEDI850" type="tns:UsesEDIType"
+				minOccurs="0" />
+			<xs:element name="usesEDI852" type="tns:UsesEDIType"
+				minOccurs="0" />
+			<xs:element name="usesEDI855" type="tns:UsesEDIType"
+				minOccurs="0" />
+			<xs:element name="usesEDI860" type="tns:UsesEDIType"
+				minOccurs="0" />
+			<xs:element name="usesEDI861" type="tns:UsesEDIType"
+				minOccurs="0" />
+			<xs:element name="ediDistributionCode"
+				type="tns:EDIDistributionCodeType" minOccurs="0" />
+
+
+
+
+			<!-- REVIEW type change from "tns:ShipFromPortIdType" -->
+			<xs:element name="shipFromPortId" type="odcommon:IDType"
+				minOccurs="0" />
+
+
+
+
+			<xs:element name="manufacturingSiteId"
+				type="odcommon:IDType" minOccurs="0" />
+			<xs:element name="buyingAgentSiteId" type="odcommon:IDType"
+				minOccurs="0" />
+			<xs:element name="freightForwarderSiteId"
+				type="odcommon:IDType" minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+
+
+	<xs:complexType name="RTVType">
+		<xs:annotation>
+			<xs:documentation>Type representing Return to Vendor information</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="rtvOptionCode"
+				type="tns:RTVOptionCodeType" minOccurs="0" />
+			<xs:element name="freightTermCode"
+				type="tns:FreightTermCodeType" minOccurs="0" />
+			<xs:element name="rtvFreightPaymentMethod"
+				type="tns:RTVFreightPaymentMethod" minOccurs="0" />
+			<xs:element name="rtvMinimumQuantity"
+				type="tns:RTVMinimumQuantityType" minOccurs="0" />
+			<xs:element name="rtvMinimumAmount"
+				type="tns:RTVMinimumAmountType" minOccurs="0" />
+			<xs:element name="rtvInstructions"
+				type="tns:RTVInstructionsType" minOccurs="0" />
+			<xs:element name="rtvAdditionalInstructions"
+				type="tns:RTVInstructionsType" minOccurs="0" />
+			<xs:element name="rtvRelatedSiteId"
+				type="odcommon:LocationIDType" minOccurs="0" />
+		</xs:sequence>
+	</xs:complexType>
+
+	<xs:simpleType name="CategoryCodeType">
+		<xs:annotation>
+			<xs:documentation>Category code</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string" />
+	</xs:simpleType>
+	<xs:simpleType name="DamageDestroyLimitAmountType">
+		<xs:annotation>
+			<xs:documentation>
+				Damage destroy limit amount
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="odcommon:AmountType" />
+	</xs:simpleType>
+	<xs:simpleType name="DeliveryPolicyCodeType">
+		<xs:annotation>
+			<xs:documentation>Delivery policy code</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string" />
+	</xs:simpleType>
+	<xs:simpleType name="DestroyAllowAmountType">
+		<xs:annotation>
+			<xs:documentation>Destroy allow amount</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="odcommon:AmountType" />
+	</xs:simpleType>
+	<xs:simpleType name="EDIDistributionCodeType">
+		<xs:annotation>
+			<xs:documentation>EDI distribution code</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string" />
+	</xs:simpleType>
+	<xs:simpleType name="ETFSettleDurationType">
+		<xs:annotation>
+			<xs:documentation>ETF settle duration</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string" />
+	</xs:simpleType>
+	<xs:simpleType name="FreightTermCodeType">
+		<xs:annotation>
+			<xs:documentation>Freight term code</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string" />
+	</xs:simpleType>
+	<xs:simpleType name="HandlingCodeType">
+		<xs:annotation>
+			<xs:documentation>Handling code</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string" />
+	</xs:simpleType>
+	<xs:simpleType name="InventoryTypeCodeType">
+		<xs:annotation>
+			<xs:documentation>Inventory type code</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string" />
+	</xs:simpleType>
+	<xs:simpleType name="IsARAttentionType">
+		<xs:annotation>
+			<xs:documentation>AR attention indicator</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:boolean" />
+	</xs:simpleType>
+	<xs:simpleType name="IsAutoReceiptAllowedType">
+		<xs:annotation>
+			<xs:documentation>
+				Auto receipt allowed indicator
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:boolean" />
+	</xs:simpleType>
+	<xs:simpleType name="IsBackOrderedType">
+		<xs:annotation>
+			<xs:documentation>back order indicator</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:boolean" />
+	</xs:simpleType>
+	<xs:simpleType name="IsContactForRGAType">
+		<xs:annotation>
+			<xs:documentation>contact for RGA</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:boolean" />
+	</xs:simpleType>
+	<xs:simpleType name="IsCombinePickTicketType">
+		<xs:annotation>
+			<xs:documentation>Combine pick ticket</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:boolean" />
+	</xs:simpleType>
+	<xs:simpleType name="IsDebitMemoAllowedType">
+		<xs:annotation>
+			<xs:documentation>
+				Debit memo allowed indicator
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:boolean" />
+	</xs:simpleType>
+	<xs:simpleType name="IsDeductFromInvoiceType">
+		<xs:annotation>
+			<xs:documentation>
+				Deduct from invoice indicator
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:boolean" />
+	</xs:simpleType>
+	<xs:simpleType name="IsDestroyType">
+		<xs:annotation>
+			<xs:documentation>Destroy indicator</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:boolean" />
+	</xs:simpleType>
+	<xs:simpleType name="IsLateShipType">
+		<xs:annotation>
+			<xs:documentation>Late ship indicator</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:boolean" />
+	</xs:simpleType>
+	<xs:simpleType name="IsNewStoreType">
+		<xs:annotation>
+			<xs:documentation>New store indicator</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:boolean" />
+	</xs:simpleType>
+	<xs:simpleType name="IsObsoleteItemType">
+		<xs:annotation>
+			<xs:documentation>Obsolete item indicator</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:boolean" />
+	</xs:simpleType>
+	<xs:simpleType name="IsPermanentRGAType">
+		<xs:annotation>
+			<xs:documentation>Permanent RGA indicator</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:boolean" />
+	</xs:simpleType>
+	<xs:simpleType name="IsPickPackType">
+		<xs:annotation>
+			<xs:documentation>Pick pack indicator</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:boolean" />
+	</xs:simpleType>
+	<xs:simpleType name="IsPrimaryPaySiteType">
+		<xs:annotation>
+			<xs:documentation>
+				Primary pay site indicator
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:boolean" />
+	</xs:simpleType>
+	<xs:simpleType name="IsRemovePriceStickerType">
+		<xs:annotation>
+			<xs:documentation>
+				Remove price sticker indicator
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:boolean" />
+	</xs:simpleType>
+	<xs:simpleType name="IsRGAMarkType">
+		<xs:annotation>
+			<xs:documentation>RGA mark indicator</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:boolean" />
+	</xs:simpleType>
+	<xs:simpleType name="IsRFQSiteType">
+		<xs:annotation>
+			<xs:documentation>RFQ site indicator</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:boolean" />
+	</xs:simpleType>
+	<xs:simpleType name="IsSeasonalType">
+		<xs:annotation>
+			<xs:documentation>Seasonal indicator</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:boolean" />
+	</xs:simpleType>
+	<xs:simpleType name="IsSerialControlType">
+		<xs:annotation>
+			<xs:documentation>
+				Serial Control indicator
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:boolean" />
+	</xs:simpleType>
+	<xs:simpleType name="IsVerticalMarketType">
+		<xs:annotation>
+			<xs:documentation>
+				Vertical market indicator
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:boolean" />
+	</xs:simpleType>
+	<xs:simpleType name="LeadTimeDurationType">
+		<xs:annotation>
+			<xs:documentation>Lead time duration</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string" />
+	</xs:simpleType>
+	<xs:simpleType name="ObsoleteAllowanceDurationType">
+		<xs:annotation>
+			<xs:documentation>
+				Obsolete allowance duration
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string" />
+	</xs:simpleType>
+	<xs:simpleType name="PrePaidMinimumCodeType">
+		<xs:annotation>
+			<xs:documentation>Prepaid minimum code</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string" />
+	</xs:simpleType>
+	<xs:simpleType name="MinorityBusinessCodeType">
+		<xs:annotation>
+			<xs:documentation>Minority business code</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string" />
+	</xs:simpleType>
+	<xs:simpleType name="MinorityBusinessCategoryCodeType">
+		<xs:annotation>
+			<xs:documentation>
+				Minority business category code
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string" />
+	</xs:simpleType>
+	<xs:simpleType name="NewStoreTermsType">
+		<xs:annotation>
+			<xs:documentation>New store terms</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string" />
+	</xs:simpleType>
+	<xs:simpleType name="ObsoleteAllowancePercentType">
+		<xs:annotation>
+			<xs:documentation>
+				Obsolete allowance percent
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="odcommon:PercentType" />
+	</xs:simpleType>
+	<xs:simpleType name="OfficeDepotSignedDateTimeType">
+		<xs:annotation>
+			<xs:documentation>
+				OfficeDepot signed datetime
+			</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:dateTime" />
+	</xs:simpleType>
+	<xs:simpleType name="RTVOptionCodeType">
+		<xs:annotation>
+			<xs:documentation>RTV option code</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string" />
+	</xs:simpleType>
+	<xs:simpleType name="RTVMinimumQuantityType">
+		<xs:annotation>
+			<xs:documentation>RTV minimum quantity</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="odcommon:QuantityType" />
+	</xs:simpleType>
+	<xs:simpleType name="RTVMinimumAmountType">
+		<xs:annotation>
+			<xs:documentation>RTV minimum amount</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="odcommon:AmountType" />
+	</xs:simpleType>
+	<xs:simpleType name="RTVInstructionsType">
+		<xs:annotation>
+			<xs:documentation>RTV instructions</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string" />
+	</xs:simpleType>
+	<xs:simpleType name="RTVFreightPaymentMethod">
+		<xs:annotation>
+			<xs:documentation>RTV instructions</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string" />
+	</xs:simpleType>
+
+	<xs:simpleType name="SeasonalTermsType">
+		<xs:annotation>
+			<xs:documentation>Seasonal terms</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string" />
+	</xs:simpleType>
+	<xs:simpleType name="ShipFromPortIdType">
+		<xs:annotation>
+			<xs:documentation>Ship from port id</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string" />
+	</xs:simpleType>
+	<xs:simpleType name="UsesEDIType">
+		<xs:annotation>
+			<xs:documentation>Uses EDI document</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:boolean" />
+	</xs:simpleType>
+	<xs:simpleType name="VendorMinimumAmountType">
+		<xs:annotation>
+			<xs:documentation>Vendor minimum amount</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="odcommon:AmountType" />
+	</xs:simpleType>
+	<xs:simpleType name="VendorSignedDateTimeType">
+		<xs:annotation>
+			<xs:documentation>Vendor signed datetime</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:dateTime" />
+	</xs:simpleType>
+	
+	<simpleType name="SupplierIDType">
+		<xs:annotation>
+			<xs:documentation>
+				Identifies supplier id
+			</xs:documentation>
+		</xs:annotation>
+		<restriction base="odcommon:IDType"></restriction>
+	</simpleType>
+	
+	<simpleType name="SiteIDType">
+		<xs:annotation>
+			<xs:documentation>
+				Identifies site id
+			</xs:documentation>
+		</xs:annotation>
+		<restriction base="odcommon:IDType"></restriction>
+	</simpleType>
+	
+
+	<complexType name="SupplierContactType">
+		<annotation>
+			<documentation>
+				Contact identity information related to suppliers
+			</documentation>
+		</annotation>
+		<complexContent>
+			<extension base="odcommon:PersonType">
+				<sequence>
+					<element name="supplierContactType" type="tns:SupplierContactTypeType" minOccurs="0"></element>
+				</sequence>
+			</extension>
+		</complexContent>
+	</complexType>
+
+	<simpleType name="SupplierContactTypeType">
+        <annotation>
+        	<documentation>The supplier contact types could be SALES, SHIPPING, CUSTOMER_SERVICE</documentation>
+        </annotation>
+        <restriction base="string">
+			<enumeration value="SALES" />
+	        <enumeration value="SHIPPING" />
+	        <enumeration value="CUSTOMER_SERVICE" />
+		</restriction>
+	</simpleType>
+
+	<complexType name="SupplierContactAssociationType">
+		<annotation>
+			<documentation>List of supplier contacts</documentation>
+		</annotation>
+		<sequence>
+			<element name="supplierList" type="tns:SupplierContactType" minOccurs="0" maxOccurs="unbounded"></element>
+		</sequence>
+	</complexType>
+
+	<complexType name="SupplierItemRelationshipType">
+		<sequence>
+			<element name="supplier" type="tns:SupplierType"
+				minOccurs="1">
+			</element>
+			<element name="item" type="inventory:SkuType"
+				minOccurs="1">
+			</element>
+			<element name="supplierItemNumber" type="odcommon:IDType"
+				minOccurs="0">
+				<annotation>
+					<documentation>
+						Used initially to create Item #
+					</documentation>
+				</annotation>
+			</element>
+
+
+			<element name="systemClassifier" minOccurs="0"
+				type="odcommon:SystemClassifierType">
+				<annotation>
+					<documentation>
+						ODP - OfficeDepot South supplierItem OMX -
+						OfficeDepot North supplierItem
+					</documentation>
+				</annotation>
+			</element>
+			<element name="isPrimarySupplier" type="boolean"
+				minOccurs="0">
+				<annotation>
+					<documentation>
+						For supply chain, it identifies primary supplier
+						source Used to automatically pick the primary
+						when re-ordering an item
+					</documentation>
+				</annotation>
+			</element>
+			<element name="isForContractCustomerOnly" type="boolean"
+				minOccurs="0">
+			</element>
+			<element name="isVirtualWarehouseItem" type="boolean"
+				minOccurs="0">
+				<annotation>
+					<documentation>
+						Vendor ships directly to customer without coming
+						to warehouses It will always be a False for GSO
+						vendors (private brand vendors will always ship
+						from warehouse)
+					</documentation>
+				</annotation>
+			</element>
+			<element name="virtualWarehouseSupplierItemNumber"
+				type="odcommon:IDType" minOccurs="0">
+				<annotation>
+					<documentation>
+						Vendor Product Number for 3rd party suppliers
+						(Suppliers that ship direct without using OD
+						warehouse)
+					</documentation>
+				</annotation>
+			</element>
+			<element name="portOfOrigin" type="tns:PortOfOriginCodeType"
+				minOccurs="0">
+			</element>
+			<element name="countryOfOriginList"
+				type="inventory:CountryOfOriginListType" minOccurs="0">
+				<annotation>
+					<documentation>
+						2 Letter country codes
+					</documentation>
+				</annotation>
+			</element>
+			<element name="costInformation"
+				type="tns:CostInformationType" minOccurs="0">
+			</element>
+			<element name="inventoryOwnershipCode"
+				type="tns:InventoryOwnershipCodeType" minOccurs="0">
+			</element>
+			<element name="confirmationControlKeyCode"
+				type="tns:ConfirmationControlKeyCodeType" minOccurs="0">
+				<annotation>
+					<documentation>
+						An omx contractual field
+
+						Only two values possible: 3rd party / owned
+					</documentation>
+				</annotation>
+			</element>
+			<element name="supplierItemUPCSet"
+				type="tns:SupplierItemUPCSetType" minOccurs="0">
+			</element>
+			<element name="distributionCountryList" minOccurs="0"
+				maxOccurs="1">
+				<complexType>
+					<sequence>
+						<element name="distributionCountry"
+							type="tns:DistributionCountryType" minOccurs="1"
+							maxOccurs="unbounded">
+						</element>
+					</sequence>
+				</complexType>
+			</element>
+			<element name="primaryForLocations" minOccurs="0"
+				maxOccurs="1">
+				<complexType>
+					<sequence>
+						<element name="locationTypeCode" type="string"
+							minOccurs="0" maxOccurs="unbounded">
+						</element>
+					</sequence>
+				</complexType>
+			</element>
+			<element name="purchaseOrderUom"
+				type="odcommon:UnitOfMeasureType" minOccurs="0">
+				<annotation>
+					<documentation>
+						UOM that vendor sets on the Purchase Orders
+						Standard UOM is how OD sells the item,
+						purchaseOrderUOM is how the vendor wants the UOM
+						transmitted on the Purchase Orders. Alias: EDI
+						order code
+					</documentation>
+				</annotation>
+			</element>
+			<element name="shipmentQuantities" type="tns:ShipmentQuantitiesType" minOccurs="0"></element>
+		</sequence>
+	</complexType>
+
+
+	<complexType name="BusinessClassificationType">
+		<sequence>
+			<element name="isMinorityBusiness" type="boolean" minOccurs="0"></element>
+		</sequence>
+	</complexType>
+
+	<complexType name="CostInformationType">
+		<sequence>
+			<element name="purchaseOrderCost"
+				type="tns:PurchaseOrderCostType" minOccurs="0">
+			</element>
+			<element name="freightOnBoardCost"
+				type="odcommon:FinanicalAmountType" minOccurs="0">
+				<annotation>
+					<documentation>
+						Transportation cost of goods that OD pays
+						Vendor. This cost is (Item cost + Transportation
+						cost) item supplier combination
+					</documentation>
+				</annotation>
+			</element>
+			<element name="averageFreightCost"
+				type="odcommon:FinanicalAmountType" minOccurs="0">
+				<annotation>
+					<documentation>
+						Shipping cost alone (does not include item cost
+						as the Fob does)
+					</documentation>
+				</annotation>
+			</element>
+			<element name="estimatedLandedCost"
+				type="odcommon:FinanicalAmountType" minOccurs="0">
+			</element>
+			<element name="priceProtectionEnabled" type="boolean"
+				minOccurs="0">
+				<annotation>
+					<documentation>
+						Only applicable to ODS
+					</documentation>
+				</annotation>
+			</element>
+			<element name="effectiveDate" type="dateTime"
+				minOccurs="0">
+			</element>
+			<element name="systemClassifier" minOccurs="0"
+				type="odcommon:SystemClassifierType">
+				<annotation>
+					<documentation>
+						ODP - OfficeDepot South
+						supplierItemCostInformation OMX - OfficeDepot
+						North supplierItemCostInformation
+					</documentation>
+				</annotation>
+			</element>
+		</sequence>
+	</complexType>
+
+	<simpleType name="SupplierItemSourcingCodeType">
+		<restriction base="string">
+			<enumeration value="ODP"></enumeration>
+			<enumeration value="OMX"></enumeration>
+		</restriction>
+	</simpleType>
+
+	<simpleType name="InventoryOwnershipCodeType">
+		<restriction base="string">
+			<enumeration value="OwnedItem">
+				<annotation>
+					<documentation>
+						OD owned item
+					</documentation>
+				</annotation>
+			</enumeration>
+			<enumeration value="3rdParty">
+				<annotation>
+					<documentation>
+						Supplier owned item listed by OD and shipped direct from supplier
+					</documentation>
+				</annotation>
+			</enumeration>
+			<enumeration value="Consigned">
+				<annotation>
+					<documentation>
+						Supplier owned, stocked in OD warehouse
+					</documentation>
+				</annotation>
+			</enumeration>
+		</restriction>
+	</simpleType>
+
+	<simpleType name="ConfirmationControlKeyCodeType">
+		<restriction base="string">
+			<enumeration value="OwnedItem"></enumeration>
+			<enumeration value="3rdParty"></enumeration>
+		</restriction>
+	</simpleType>
+
+
+	<simpleType name="PortOfOriginCodeType">
+		<restriction base="string"></restriction>
+	</simpleType>
+
+
+
+	<complexType name="DistributionCountryType">
+		<sequence>
+            <element name="countryCode" type="odcommon:CountryCodeType" minOccurs="0"></element>
+            <element name="countrySpecificPhysicalAttributesList"
+				minOccurs="0" maxOccurs="1">
+				<complexType>
+					<sequence>
+						<element
+							name="countrySpecificPhysicalAttributes"
+							type="inventory:SkuUPCPhysicalAttributesType" maxOccurs="unbounded">
+						</element>
+					</sequence>
+				</complexType>
+			</element>
+		</sequence>
+	</complexType>
+
+	<complexType name="SupplierItemUPCSetType">
+        <annotation>
+        	<documentation>ODP - OfficeDepot South supplierItemUPCSet
+OMX - OfficeDepot North supplierItemUPCSet</documentation>
+        </annotation>
+        <sequence>
+			<element name="packageLevelUPCList" minOccurs="0"
+				maxOccurs="1" type="inventory:SkuPackageLevelUPCListType">
+			</element>
+			<element name="sellUnitUPCList" minOccurs="0">
+				<complexType>
+					<sequence>
+						<element name="sellUnitUPC"
+							type="inventory:SkuUPCType" minOccurs="0"
+							maxOccurs="unbounded">
+						</element>
+					</sequence>
+				</complexType>
+			</element>
+			<element name="systemClassifier" minOccurs="0" type="odcommon:SystemClassifierType">
+                <annotation>
+                	<documentation>supplierItemCostInformation</documentation></annotation>
+			</element>
+		</sequence>
+	</complexType>
+
+
+	<complexType name="PurchaseOrderCostType">
+		<sequence>
+			<element name="retailDomesticCost"
+				type="odcommon:FinanicalAmountType" minOccurs="0">
+			</element>
+			<element name="retailImportCost"
+				type="odcommon:FinanicalAmountType" minOccurs="0">
+			</element>
+			<element name="contractDomesticCost" type="odcommon:FinanicalAmountType" minOccurs="0"></element>
+		</sequence>
+	</complexType>
+
+	<complexType name="ShipmentQuantitiesType">
+		<sequence>
+			<element name="innerPackQuantity"
+				type="odcommon:QuantityType" minOccurs="0">
+			</element>
+			<element name="masterPackQuantity" type="odcommon:QuantityType" minOccurs="0"></element>
+		</sequence>
+	</complexType>
+</schema>

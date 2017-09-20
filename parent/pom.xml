@@ -22,7 +22,7 @@
     
     <!-- plugin versions -->
     <version.maven.compiler.plugin>3.2</version.maven.compiler.plugin>
-    <version.maven.jaxb2.plugin>0.7.2</version.maven.jaxb2.plugin>
+    <version.maven.jaxb2.plugin>0.13.1</version.maven.jaxb2.plugin>
     
   </properties>
 
