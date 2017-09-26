@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
   <groupId>com.redhat.officedepot</groupId>
@@ -10,7 +11,7 @@
   </properties>
   <dependencyManagement>
     <dependencies>
-        <!-- fabric8 bom  -->
+        <!-- fabric8 bom for sprintboot  -->
         <dependency>
             <groupId>io.fabric8</groupId>
             <artifactId>fabric8-project-bom-camel-spring-boot</artifactId>
@@ -23,5 +24,7 @@
   <modules>
   	<module>personalization-entities</module>
   	<module>personalization-common</module>
+    <module>personalization-service</module>
+    <module>personalization-web</module>
   </modules>
 </project>
