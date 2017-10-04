@@ -3,16 +3,13 @@
   <modelVersion>4.0.0</modelVersion>
 
   <parent>
-    <groupId>com.officedepot</groupId>
-    <artifactId>fuse-parent</artifactId>
+    <groupId>com.officedepot.eai</groupId>
+    <artifactId>personalization</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <relativePath>../parent</relativePath>
   </parent>
 
-  <groupId>com.officedepot.entities</groupId>
   <artifactId>entities-xsd</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
-
+ 
   <packaging>jar</packaging>
 
   <name>OfficeDepot :: Entities - XSD</name>
@@ -28,7 +25,7 @@
       <plugin>
         <groupId>org.jvnet.jaxb2.maven2</groupId>
         <artifactId>maven-jaxb2-plugin</artifactId>
-        <version>${version.maven.jaxb2.plugin}</version>
+        <version>0.13.2</version>
         <executions>
           <execution>
             <phase>generate-sources</phase>
@@ -36,7 +33,7 @@
               <goal>generate</goal>
             </goals>
             <configuration>
-              <generatePackage>com.officedepot</generatePackage>
+              <generatePackage>com.officedepot.eai</generatePackage>
               <schemaDirectory>src/main/resources</schemaDirectory>
               <schemaIncludes>
                 <include>ProductHierarchy/CDataProductHierarchy.xsd</include>

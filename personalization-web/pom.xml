@@ -5,15 +5,13 @@
 
   <parent>
     <artifactId>personalization</artifactId>
-    <groupId>com.redhat.officedepot</groupId>
+    <groupId>com.officedepot.eai</groupId>
     <version>0.0.1-SNAPSHOT</version>
   </parent>
 
-  <groupId>com.redhat.officedepot</groupId>
   <artifactId>personalization-web</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
 
-  <name>Fabric8 :: Quickstarts :: Spring-Boot :: Camel REST / SQL</name>
+  <name>personalization-web</name>
   <description>Spring Boot example running a Camel REST route connecting to a SQL database</description>
 
   <properties>

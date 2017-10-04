@@ -5,15 +5,13 @@
 
   <parent>
     <artifactId>personalization</artifactId>
-    <groupId>com.redhat.officedepot</groupId>
+    <groupId>com.officedepot.eai</groupId>
     <version>0.0.1-SNAPSHOT</version>
   </parent>
 
-  <groupId>com.officedepot</groupId>
   <artifactId>personalization-service</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
-
-  <name>Fabric8 :: Quickstarts :: Spring-Boot :: Camel XML</name>
+  
+  <name>personalization-service</name>
   <description>Spring Boot example running a Camel route defined in XML</description>
 
   <properties>
