@@ -15,21 +15,28 @@
  */
 package com.officedepot.personalization.web;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.servlet.CamelHttpTransportServlet;
 import org.apache.camel.model.rest.RestBindingMode;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
-import org.springframework.boot.web.support.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ImportResource;
 import org.springframework.stereotype.Component;
 
 @SpringBootApplication
 @ImportResource({"classpath:spring/camel-context.xml"})
-public class PersonalizationServiceApplication extends SpringBootServletInitializer {
+public class PersonalizationServiceApplication {
 
+	
     public static void main(String[] args) {
         SpringApplication.run(PersonalizationServiceApplication.class, args);
     }
@@ -44,21 +51,29 @@ public class PersonalizationServiceApplication extends SpringBootServletInitiali
 
     @Component
     class PersonalizationRestApi extends RouteBuilder {
-
+    	
+    	private final Log log = LogFactory.getLog(PersonalizationRestApi.class);
         @Override
         public void configure() {
+        	
+        	/**
+        	 * @author Michael-Costello
+        	 * FIXME ensure properties get externalized
+        	 */
             restConfiguration()
+            	.component("undertow")
                 .contextPath("/eaiapi/personalization").apiContextPath("/getPersonalizationRequest")
-                    .apiProperty("api.title", "Personzliation Recommendations Request")
+                    .apiProperty("api.title", "Personazliation Recommendations Request")
                     .apiProperty("api.version", "0.1")
                     .apiProperty("cors", "true")
                     .apiContextRouteId("getPersonalizationRequest")
-                .component("servlet")
-                .bindingMode(RestBindingMode.json);
+                .bindingMode(RestBindingMode.json)
+                .host("localhost").port(8081);
 
-            rest("/getPersonalizationRequest").description("Personalization recommendation Request")
+            rest("/getPersonalizationRequest").description("Personalization Recommendation Request")
             	.post()
-                    .route().routeId("personaliztion-recommendation-request")
+                    .route().routeId("personalization-recommendation-request")
+                    .transform(simple(getStubbedResponse()))
                     .log("${body}")
                     /**
                      * @author mcostell
@@ -66,6 +81,20 @@ public class PersonalizationServiceApplication extends SpringBootServletInitiali
                      */
                     /*.to("affinityService")*/
                     .endRest();
+        }
+        
+        private String getStubbedResponse() {
+        	File stubbedResponse = new File("./src/main/resources/sample/personalizationResponse.json"); 
+        	StringBuffer sampleResponse = new StringBuffer(); 
+        	try {
+        	    	BufferedReader reader = Files.newBufferedReader(Paths.get(stubbedResponse.getCanonicalPath()));
+        	    	while (reader.readLine() != null) {
+        	    		sampleResponse.append(reader.readLine());
+        	       	}
+        	    }catch(Exception e) {
+        	    	log.error(e);; 
+        	    }
+        	return sampleResponse.toString(); 
         }
     }
 

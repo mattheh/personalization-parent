@@ -15,14 +15,23 @@
  */
 package com.officedepot.personalization.web;
 
+import static org.junit.Assert.assertEquals;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+
 import org.apache.camel.CamelContext;
-import org.junit.Ignore;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.web.client.TestRestTemplate;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
@@ -34,42 +43,33 @@ public class PersonalizationServiceApplicationTest {
 
     @Autowired
     private CamelContext camelContext;
+    
 
-    @Ignore
+    private Log log = LogFactory.getLog(PersonalizationServiceApplicationTest.class);
+
     @Test
-    public void newOrderTest() {
-        // Wait for maximum 5s until the first order gets inserted and processed
-        /*NotifyBuilder notify = new NotifyBuilder(camelContext)
-            .fromRoute("generate-order")
-            .whenDone(2)
-            .and()
-            .fromRoute("process-order")
-            .whenDone(1)
-            .create();
-        assertThat(notify.matches(10, TimeUnit.SECONDS)).isTrue();
-		*/
-        // Then call the REST API
-    	/**
-    	 * @author mcostell
-    	 * FIXME mcostell need to do something like this for the personalization service
-    	 */
-/* ResponseEntity<Order> orderResponse = restTemplate.getForEntity("/camel-rest-sql/books/order/1", Order.class);
-        assertThat(orderResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
-        Order order = orderResponse.getBody();
-        assertThat(order.getId()).isEqualTo(1);
-        assertThat(order.getAmount()).isBetween(1, 10);
-        assertThat(order.getItem()).isIn("Camel", "ActiveMQ");
-        assertThat(order.getDescription()).isIn("Camel in Action", "ActiveMQ in Action");
-        assertThat(order.isProcessed()).isTrue();
+    public void personalizationServiceTest() throws Exception {
+    
+    	
+    ResponseEntity<String> personalizationResponse = restTemplate.postForEntity("http://localhost:8081/eaiapi/personalization/getPersonalizationRequest", String.class, String.class);
+    
+    File sampleResponseFile = new File("./src/test/resources/sample/personalizationResponse.json"); 
+    
+    log.info(sampleResponseFile.getCanonicalPath());
+    
+    
+    StringBuffer sampleResponse = new StringBuffer(); 
+    try {
+    	BufferedReader reader = Files.newBufferedReader(Paths.get(sampleResponseFile.getCanonicalPath()));
+    	while (reader.readLine() != null) {
+    		sampleResponse.append(reader.readLine());
+       	}
+    }catch(Exception e) {
+    	throw e; 
+    }
+    String response = personalizationResponse.getBody(); 
+    
+    assertEquals(response.toString(),sampleResponse);
 
-        ResponseEntity<List<Book>> booksResponse = restTemplate.exchange("/camel-rest-sql/books",
-            HttpMethod.GET, null, new ParameterizedTypeReference<List<Book>>(){});
-        assertThat(booksResponse.getStatusCode()).isEqualTo(HttpStatus.OK);
-        List<Book> books = booksResponse.getBody();
-        assertThat(books).hasSize(2);
-        assertThat(books).element(0)
-            .hasFieldOrPropertyWithValue("description", "ActiveMQ in Action");
-        assertThat(books).element(1)
-            .hasFieldOrPropertyWithValue("description", "Camel in Action"); */
     }
 }
