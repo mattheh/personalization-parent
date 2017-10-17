@@ -1,0 +1,36 @@
+{
+"getPersonalizedRecommendationsRequest":{  
+      "customer":{  
+         "accountNumber":"01439995",
+         "loginName":"RONALD.MOISE@OFFICEDEPOT.COM",
+         "loyaltyMember":"1931370371",
+         "emailAddress":"ronald.moise@officedepot.com"
+      },
+      "order":{  
+         "orderSummary":{  
+            "orderNumber":"342711479",
+            "orderDate":"2016-11-03",
+            "transactionNumber":""
+         },
+         "orderLines":{  
+            "orderLine":[  
+               {  
+                  "sku":{  
+                     "skuDepartment":"65",
+                     "skuProduct":"0315515",
+                     "skuClass":"901",
+                     "skuSubclass":"0471"
+                  },
+                  "orderLinerNumber":"1",
+                  "skuQuantity":"10",
+                  "skuPrice":"1.30"
+               }
+            ]
+         }
+      },
+      "transactionHeader":{  
+         "consumerName":"WWW",
+         "consumerTransactionID":"342711479"
+      }
+   }
+}

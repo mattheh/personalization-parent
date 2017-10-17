@@ -1,0 +1,26 @@
+{  
+   "getPersonalizedRecommendationsResponse":{  
+      "transactionHeader":{  
+         "consumerName":"WWW",
+         "consumerTransactionID":"342711479"
+      },
+      "personalizedRecommendedOffers":{  
+         "personalizedRecommendedOffer":{  
+            "personalizedRecommendedOffer":{  
+               "personalizedCoupon":{  
+                  "promotionCode":"60029461",
+                  "offerDescription":[  
+
+                  ],
+                  "couponCode":"60029461",
+                  "serializedCoupon":"HGN5CRS59W1P6Q",
+                  "legalText":"Valid only at officedepot.com, by phone or fax or in store. Must present this coupon (no reproductions) at time of purchase. Use the coupon code for phone or fax orders or enter the coupon code to cart online at checkout. Cannot be combined with Sto",
+                  "CouponExpirationDate":[  
+
+                  ]
+               }
+            }
+         }
+         }
+         }
+}
