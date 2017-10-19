@@ -13,7 +13,7 @@
  * implied.  See the License for the specific language governing
  * permissions and limitations under the License.
  */
-package com.officedepot.personalization.web;
+package com.officedepot.eai.personalization.web;
 
 import static org.junit.Assert.assertEquals;
 
@@ -25,6 +25,7 @@ import java.nio.file.Paths;
 import org.apache.camel.CamelContext;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,9 +55,6 @@ public class PersonalizationServiceApplicationTest {
     ResponseEntity<String> personalizationResponse = restTemplate.postForEntity("http://localhost:8081/eaiapi/personalization/getPersonalizationRequest", String.class, String.class);
     
     File sampleResponseFile = new File("./src/test/resources/sample/personalizationResponse.json"); 
-    
-    log.info(sampleResponseFile.getCanonicalPath());
-    
     
     StringBuffer sampleResponse = new StringBuffer(); 
     try {

@@ -8,6 +8,7 @@
   <name>personalization-parent</name>
   <properties>
   	<fabric8.io.version>2.2.170.redhat-000013</fabric8.io.version>
+  	<camel.version>2.18.1.redhat-000015</camel.version>
   </properties>
   <dependencyManagement>
     <dependencies>
@@ -25,7 +26,7 @@
   	<module>entities-xsd</module>
   	<module>personalization-entities</module>
   	<module>personalization-common</module>
-    <module>personalization-service</module>
+    <!-- <module>personalization-service</module> -->
     <module>personalization-web</module>
   </modules>
 </project>

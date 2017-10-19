@@ -69,6 +69,10 @@
     </dependency>
     <!-- testing -->
     <dependency>
+    	<groupId>org.springframework</groupId>
+    	<artifactId>spring-test</artifactId>
+    </dependency>
+    <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-test</artifactId>
       <scope>test</scope>
@@ -93,6 +97,12 @@
     	<artifactId>spring-boot-starter-web</artifactId>
     	<scope>test</scope>
     </dependency>
+    <!-- couchbase  -->
+     <dependency>
+  		<groupId>org.apache-extras.camel-extra</groupId>
+  		<artifactId>camel-couchbase</artifactId>
+  		<version>2.15.0</version> <!-- FIXME mcostell get redhat version of this -->
+  	</dependency>
   </dependencies>
 
   <profiles>

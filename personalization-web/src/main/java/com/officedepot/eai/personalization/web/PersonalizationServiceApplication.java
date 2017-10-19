@@ -13,7 +13,7 @@
  * implied.  See the License for the specific language governing
  * permissions and limitations under the License.
  */
-package com.officedepot.personalization.web;
+package com.officedepot.eai.personalization.web;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -45,7 +45,7 @@ public class PersonalizationServiceApplication {
     ServletRegistrationBean servletRegistrationBean() {
         ServletRegistrationBean servlet = new ServletRegistrationBean(
             new CamelHttpTransportServlet(), "/eaiapi/personalization/*");
-        servlet.setName("CamelServlet");
+        servlet.setName("PersonalizationServiceServlet");
         return servlet;
     }
 
