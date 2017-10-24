@@ -3,7 +3,7 @@ package com.officedepot.eai.personalization.productaffinity;
 import org.apache.camel.builder.RouteBuilder;
 import org.springframework.stereotype.Component;
 
-@Component
+@Component("productAffinityService")
 public class ProductAffinityService extends RouteBuilder{
 
 	@Override
@@ -20,7 +20,18 @@ public class ProductAffinityService extends RouteBuilder{
 		 * TODO mcostell
 		 * need to wire up camel-jdbc 
 		 */
-		from("jdbc:aopsDS?customerAffinityPS")
+		from("direct:productAffinityService")
+		/**
+		 * @author Michael-Costello
+		 * TODO mcostell this assumes we have a pojo in the body that supports this stored proc
+		 */
+		.routeDescription("Product Affinity Service")
+		.routeId("productAffinityServiceRoute")
+		.to("sql:select-stored:GETAFFPRD(STRING ${body.lifecycleGroup}, STRING ${body.customerTypeGroup}, STRING ${body.marketObjectiveScore}, STRING ${body.requestString}, "
+				+ " OUT STRING result?dataSource=#dataSource")
+		
+		//.to("{{aopsInteraction}}")
+		.log("${body}")
 		.transform(simple("this should be a copybook xform"))
 		//.convertBodyTo(CustomerAffinty.class) //FIXME craete customer affinty 
 		;

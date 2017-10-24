@@ -25,34 +25,39 @@ import java.nio.file.Paths;
 import org.apache.camel.CamelContext;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.junit.Ignore;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import com.officedepot.eai.data.ODDataSource;
+import com.officedepot.eai.personalization.productaffinity.ProductAffinityService;
+
 @RunWith(SpringRunner.class)
-@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
+@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT, classes= {PersonalizationServiceApplication.class,ProductAffinityService.class,ODDataSource.class})
+@EnableAutoConfiguration(exclude={DataSourceAutoConfiguration.class})
 public class PersonalizationServiceApplicationTest {
 
+	private Log log = LogFactory.getLog(PersonalizationServiceApplicationTest.class);
+	
     @Autowired
     private TestRestTemplate restTemplate;
 
     @Autowired
     private CamelContext camelContext;
-    
-
-    private Log log = LogFactory.getLog(PersonalizationServiceApplicationTest.class);
-
+ 
     @Test
     public void personalizationServiceTest() throws Exception {
     
     	
-    ResponseEntity<String> personalizationResponse = restTemplate.postForEntity("http://localhost:8081/eaiapi/personalization/getPersonalizationRequest", String.class, String.class);
+    ResponseEntity<String> personalizationResponse = restTemplate.postForEntity("http://localhost:8080/eaiapi/personalization/getPersonalizationRequest", String.class, String.class);
     
     File sampleResponseFile = new File("./src/test/resources/sample/personalizationResponse.json"); 
     
