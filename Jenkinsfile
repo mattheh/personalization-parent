@@ -7,6 +7,6 @@ buildDeployService {
     timeoutSeconds = "5"
     healthUrl = "/"
 	buildCommands = [
-	         		"mvn install"
+	         		"mvn install --settings /etc/maven/settings.xml"
 	         		]
 }
