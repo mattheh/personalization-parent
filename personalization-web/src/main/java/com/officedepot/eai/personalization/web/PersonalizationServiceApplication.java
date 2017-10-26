@@ -29,6 +29,7 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.ImportResource;
 import org.springframework.stereotype.Component;
 
@@ -61,19 +62,21 @@ public class PersonalizationServiceApplication {
         	 * FIXME ensure properties get externalized
         	 */
             restConfiguration()
-            	.component("undertow")
+            	.component("{{application.servlet.component}}")
                 .contextPath("/eaiapi/personalization").apiContextPath("/getPersonalizationRequest")
                     .apiProperty("api.title", "Personazliation Recommendations Request")
                     .apiProperty("api.version", "0.1")
                     .apiProperty("cors", "true")
                     .apiContextRouteId("getPersonalizationRequest")
                 .bindingMode(RestBindingMode.json)
-                .host("localhost").port(8081);
+                .host("localhost").port(8080);
 
             rest("/getPersonalizationRequest").description("Personalization Recommendation Request")
             	.post()
                     .route().routeId("personalization-recommendation-request")
-                    .transform(simple(getStubbedResponse()))
+                    //.transform(simple(getStubbedResponse()))
+                    .log("${body}")
+                    .to("direct:productAffinityService").id("toProductAffinityService")
                     .log("${body}")
                     /**
                      * @author mcostell

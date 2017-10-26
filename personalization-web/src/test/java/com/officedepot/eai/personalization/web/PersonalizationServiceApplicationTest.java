@@ -59,7 +59,7 @@ public class PersonalizationServiceApplicationTest {
     	
     ResponseEntity<String> personalizationResponse = restTemplate.postForEntity("http://localhost:8080/eaiapi/personalization/getPersonalizationRequest", String.class, String.class);
     
-    File sampleResponseFile = new File("./src/test/resources/sample/personalizationResponse.json"); 
+    File sampleResponseFile = new File("./src/test/resources/sample/personalizationRequest/personalizationResponse.json"); 
     
     StringBuffer sampleResponse = new StringBuffer(); 
     try {

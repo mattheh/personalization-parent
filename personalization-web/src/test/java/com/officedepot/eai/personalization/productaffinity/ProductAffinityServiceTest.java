@@ -1,28 +1,32 @@
 package com.officedepot.eai.personalization.productaffinity;
 
 
+import java.io.File;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+
 import org.apache.camel.CamelContext;
 import org.apache.camel.ProducerTemplate;
 import org.junit.Assert;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
+import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
+import org.w3c.dom.Document;
+
+import com.officedepot.eai.data.ODDataSource;
 
 @DirtiesContext
-@EnableAutoConfiguration
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes=ProductAffinityService.class, properties= {"spring.datasource.driverClassName=com.ibm.as400.access.AS400JDBCDriver", 
-	"spring.datasource.url=jdbc:as400://rndfuture.uschecomrnd.net;naming=system"})
+@SpringBootTest(classes= {ProductAffinityService.class, ODDataSource.class})
+@EnableAutoConfiguration(exclude={DataSourceAutoConfiguration.class})
 public class ProductAffinityServiceTest extends Assert{
 	
 	private static Logger log = LoggerFactory.getLogger(ProductAffinityServiceTest.class);
@@ -31,12 +35,15 @@ public class ProductAffinityServiceTest extends Assert{
 	CamelContext camelContext; 
 	
 	@Autowired
-	@Qualifier("productAffinityService")
 	ProducerTemplate producerTemplate; 
 	
 	@Test
 	public void testProductAffinityService() throws Exception{
-		producerTemplate.sendBody("direct:productAffinityService", "test");
+		File productAffinityRequest = new File("./src/main/resources/sample/productAffinity/singleItemRequest.xml");
+		DocumentBuilderFactory domFactory = DocumentBuilderFactory.newInstance();
+		DocumentBuilder docBuilder = domFactory.newDocumentBuilder();
+		Document prodAffinityReqDoc = docBuilder.parse(productAffinityRequest);
+		producerTemplate.sendBody("direct:productAffinityService", prodAffinityReqDoc);
 	}
 	
 	/*@Configuration	
