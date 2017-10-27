@@ -1,0 +1,176 @@
+
+<aff:getProductAffinityRequest
+	xmlns:aff="http://eai.officedepot.com/service/AffinityModelService">
+
+
+	<tran:transactionHeader xmlns:tran="http://www.officedepot.com/model/transaction">
+
+
+		<tran:consumer
+			xmlns:cus="http://eai.officedepot.com/schemas/CustomerPersonalizedPromotionService">
+
+			<tran:consumerName>OrderConfirmationEmail</tran:consumerName>
+
+			<tran:consumerTransactionID>343280308</tran:consumerTransactionID>
+
+		</tran:consumer>
+
+	</tran:transactionHeader>
+
+
+	<aff:productAffinityRequest>
+
+		<aff:customerLifeCycleGroup>DEFAULT</aff:customerLifeCycleGroup>
+
+		<aff:customerTypeGroup>DEFAULT</aff:customerTypeGroup>
+
+		<aff:scoreType>M</aff:scoreType>
+
+
+		<aff:marketBasket>
+
+
+			<aff:productBasket>
+
+				<aff:productSku>450750</aff:productSku>
+
+				<aff:productSkuSubClass>2598</aff:productSkuSubClass>
+
+				<aff:productSkuClass>172</aff:productSkuClass>
+
+				<aff:productSkuDepartment>14</aff:productSkuDepartment>
+
+			</aff:productBasket>
+
+		</aff:marketBasket>
+
+
+		<aff:marketBasket>
+
+
+			<aff:productBasket>
+
+				<aff:productSku>J729YPWQJ66V7D</aff:productSku>
+
+				<aff:productSkuSubClass />
+
+				<aff:productSkuClass />
+
+				<aff:productSkuDepartment />
+
+			</aff:productBasket>
+
+		</aff:marketBasket>
+
+
+		<aff:marketBasket>
+
+
+			<aff:productBasket>
+
+				<aff:productSku>128892</aff:productSku>
+
+				<aff:productSkuSubClass>0075</aff:productSkuSubClass>
+
+				<aff:productSkuClass>615</aff:productSkuClass>
+
+				<aff:productSkuDepartment>11</aff:productSkuDepartment>
+
+			</aff:productBasket>
+
+		</aff:marketBasket>
+
+
+		<aff:marketBasket>
+
+
+			<aff:productBasket>
+
+				<aff:productSku>J729YPWQJ66V7D</aff:productSku>
+
+				<aff:productSkuSubClass />
+
+				<aff:productSkuClass />
+
+				<aff:productSkuDepartment />
+
+			</aff:productBasket>
+
+		</aff:marketBasket>
+
+
+		<aff:marketBasket>
+
+
+			<aff:productBasket>
+
+				<aff:productSku>678982</aff:productSku>
+
+				<aff:productSkuSubClass>2826</aff:productSkuSubClass>
+
+				<aff:productSkuClass>792</aff:productSkuClass>
+
+				<aff:productSkuDepartment>05</aff:productSkuDepartment>
+
+			</aff:productBasket>
+
+		</aff:marketBasket>
+
+
+		<aff:marketBasket>
+
+
+			<aff:productBasket>
+
+				<aff:productSku>J729YPWQJ66V7D</aff:productSku>
+
+				<aff:productSkuSubClass />
+
+				<aff:productSkuClass />
+
+				<aff:productSkuDepartment />
+
+			</aff:productBasket>
+
+		</aff:marketBasket>
+
+
+		<aff:marketBasket>
+
+
+			<aff:productBasket>
+
+				<aff:productSku>110392</aff:productSku>
+
+				<aff:productSkuSubClass>1969</aff:productSkuSubClass>
+
+				<aff:productSkuClass>470</aff:productSkuClass>
+
+				<aff:productSkuDepartment>85</aff:productSkuDepartment>
+
+			</aff:productBasket>
+
+		</aff:marketBasket>
+
+
+		<aff:marketBasket>
+
+
+			<aff:productBasket>
+
+				<aff:productSku>J729YPWQJ66V7D</aff:productSku>
+
+				<aff:productSkuSubClass />
+
+				<aff:productSkuClass />
+
+				<aff:productSkuDepartment />
+
+			</aff:productBasket>
+
+		</aff:marketBasket>
+
+	</aff:productAffinityRequest>
+
+</aff:getProductAffinityRequest>
+

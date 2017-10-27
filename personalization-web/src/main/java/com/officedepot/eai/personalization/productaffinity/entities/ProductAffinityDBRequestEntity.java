@@ -4,7 +4,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 @XmlRootElement(name="InputParameters",namespace="http://xmlns.oracle.com/pcbpel/adapter/db/sp/ProductAffinityDBAdapter")
-public class ProductAffinityRequestEntity {
+public class ProductAffinityDBRequestEntity {
 	
 	private String iLifeCycleGrp; 
 	private String customerTypeGrp; 

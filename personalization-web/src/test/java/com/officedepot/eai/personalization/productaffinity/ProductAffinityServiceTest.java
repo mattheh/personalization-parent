@@ -38,20 +38,22 @@ public class ProductAffinityServiceTest extends Assert{
 	ProducerTemplate producerTemplate; 
 	
 	@Test
-	public void testProductAffinityService() throws Exception{
-		File productAffinityRequest = new File("./src/main/resources/sample/productAffinity/singleItemRequest.xml");
+	public void testMultipleProductAffinityService() throws Exception{
+		File productAffinityServiceRequest = new File("./src/main/resources/sample/productAffinity/productAffinityServiceRequest-multiple.xml");
 		DocumentBuilderFactory domFactory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder docBuilder = domFactory.newDocumentBuilder();
-		Document prodAffinityReqDoc = docBuilder.parse(productAffinityRequest);
+		Document prodAffinityReqDoc = docBuilder.parse(productAffinityServiceRequest);
 		producerTemplate.sendBody("direct:productAffinityService", prodAffinityReqDoc);
 	}
 	
-	/*@Configuration	
-	static class DataSourceConfig{
+	@Test
+	public void testSingleProductAffinityService() throws Exception{
+		/**
+		 * @author Michael-Costello
+		 * TODO build this out 
+		 */
 		
-		@Bean
-		public DataSource dataSource() {
-			return null; 
-		}
-	}*/
+	}
+	
+
 }
