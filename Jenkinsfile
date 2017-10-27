@@ -5,7 +5,7 @@ buildDeployService {
     context = "external"
     initialDelaySeconds = "180"
     timeoutSeconds = "5"
-    healthUrl = "/"
+    healthUri = "/"
 	buildCommands = [
 	         		"mvn install --settings /etc/maven/settings.xml -Dmaven.test.skip=true"
 	         		]
