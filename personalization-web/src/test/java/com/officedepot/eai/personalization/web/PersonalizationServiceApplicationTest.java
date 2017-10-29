@@ -38,7 +38,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.officedepot.eai.data.ODDataSource;
-import com.officedepot.eai.personalization.productaffinity.ProductAffinityService;
+import com.officedepot.eai.personalization.productaffinity.service.ProductAffinityService;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT, classes= {PersonalizationServiceApplication.class,ProductAffinityService.class,ODDataSource.class})
@@ -59,7 +59,7 @@ public class PersonalizationServiceApplicationTest {
     	
     ResponseEntity<String> personalizationResponse = restTemplate.postForEntity("http://localhost:8080/eaiapi/personalization/getPersonalizationRequest", String.class, String.class);
     
-    File sampleResponseFile = new File("./src/test/resources/sample/personalizationRequest/personalizationResponse.json"); 
+    File sampleResponseFile = new File("./src/main/resources/sample/personalizationRequest/personalizationResponse.json"); 
     
     StringBuffer sampleResponse = new StringBuffer(); 
     try {

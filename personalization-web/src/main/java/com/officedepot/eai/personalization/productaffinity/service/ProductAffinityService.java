@@ -1,16 +1,18 @@
-package com.officedepot.eai.personalization.productaffinity;
+package com.officedepot.eai.personalization.productaffinity.service;
 
+import java.sql.SQLException;
 import java.util.Map;
 
 import javax.xml.bind.JAXBContext;
 
+import org.apache.camel.LoggingLevel;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.converter.jaxb.JaxbDataFormat;
 import org.apache.camel.spi.DataFormat;
 import org.springframework.stereotype.Component;
 
-import com.officedepot.eai.personalization.productaffinity.entities.ProductAffinityServiceRequestEntity;
-import com.officedepot.eai.personalization.productaffinity.util.ProductAffinityResponseProcessor;
+import com.officedepot.eai.personalization.affinity.service.entities.ProductAffinityServiceRequestEntity;
+import com.officedepot.eai.personalization.productaffinity.service.util.AffinityResponseProcessor;
 
 @Component("productAffinityService")
 public class ProductAffinityService extends RouteBuilder{
@@ -33,11 +35,12 @@ public class ProductAffinityService extends RouteBuilder{
 		 *
 		 *onException(SQLException).transform("the default response");
 		 */
+		onException(Exception.class).handled(Boolean.TRUE).transform(simple("coming"));
 		
 		from("direct:productAffinityService")
 		.routeDescription("Product Affinity Service")
-		.routeId("ProductAffinityServiceRoute")
-		.log("*** UNMARSHAL ${body} ***").id("LOG_PAYLOAD")
+		.routeId("ProductAffinityServiceRoute").setHeader("service",simple("productAffinityService"))
+		.log(LoggingLevel.INFO,"*** UNMARSHAL ${body} ***").id("LOG_PAYLOAD")
 		/**
 		 * @author Michael-Costello
 		 * unmarshall payload to ProductAffinityDBRequestEntity for use later in the route 
@@ -52,12 +55,15 @@ public class ProductAffinityService extends RouteBuilder{
 		 */
 		.to("sql-stored:GETAFFPRD(VARCHAR ${body.productAffinityRequest.getCustomerLifeCycleGroup},VARCHAR ${body.productAffinityRequest.getCustomerTypeGroup},VARCHAR ${body.productAffinityRequest.getScoreType},VARCHAR ${headers.requestString},"
 				+ "OUT VARCHAR result)?dataSource=#dataSource").id("GETAFFPRD_SP")
-		.log("*** GETAFFPRD returned ${body} ***").id("LOG_GETAFFPRD_RESULT")
-		.convertBodyTo(Map.class)
-		.log("result ${bodyAs(java.util.Map)}")
-		.process(new ProductAffinityResponseProcessor())
-		//.convertBodyTo(CustomerAffinty.class) //FIXME create customer affinty 
-		;
+		.log(LoggingLevel.DEBUG,"*** GETAFFPRD returned ${body} ***").id("LOG_GETAFFPRD_RESULT")
+		.convertBodyTo(Map.class).id("CNVRT_BODY_TO_MAP")
+		/**
+		 * @author Michael-Costello
+		 * Send to product affinity response processor as result payload needs to be manipulated and values fetched 
+		 */
+		.process(new AffinityResponseProcessor()).id("PROD_AF_PROCESSOR")
+		.log(LoggingLevel.INFO,"${body}").id("DEBUG_PAYLOAD_LOG") 
+		.end().id("ProductAffinityServiceRoute_END");
 		
 		
 	}

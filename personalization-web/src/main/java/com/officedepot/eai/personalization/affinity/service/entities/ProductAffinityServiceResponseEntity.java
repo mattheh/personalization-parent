@@ -1,4 +1,4 @@
-package com.officedepot.eai.personalization.productaffinity.entities;
+package com.officedepot.eai.personalization.affinity.service.entities;
 
 import java.util.List;
 

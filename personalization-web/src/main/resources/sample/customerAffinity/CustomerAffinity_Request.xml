@@ -1,0 +1,13 @@
+
+<aff:getCustomerAffinityRequest
+	xmlns:aff="http://eai.officedepot.com/service/AffinityModelService">
+	<tran:transactionHeader xmlns:tran="http://www.officedepot.com/model/transaction">
+		<tran:consumer
+			xmlns:cus="http://eai.officedepot.com/schemas/CustomerPersonalizedPromotionService">
+			<tran:consumerName>WWW</tran:consumerName>
+			<tran:consumerTransactionID>343288836</tran:consumerTransactionID>
+		</tran:consumer>
+	</tran:transactionHeader>
+	<aff:agentId>0004760709</aff:agentId>
+	<aff:marketingObjective>M</aff:marketingObjective>
+</aff:getCustomerAffinityRequest>

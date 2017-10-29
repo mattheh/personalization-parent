@@ -1,6 +1,5 @@
 package com.officedepot.eai.personalization.productaffinity;
 
-
 import java.io.File;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -8,8 +7,6 @@ import javax.xml.parsers.DocumentBuilderFactory;
 
 import org.apache.camel.CamelContext;
 import org.apache.camel.ProducerTemplate;
-import org.junit.Assert;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -23,15 +20,15 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.w3c.dom.Document;
 
 import com.officedepot.eai.data.ODDataSource;
-import com.officedepot.eai.personalization.productaffinity.service.ProductAffinityService;
+import com.officedepot.eai.personalization.customeraffinity.service.CustomerAffinityService;
 
 @DirtiesContext
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes= {ProductAffinityService.class, ODDataSource.class})
+@SpringBootTest(classes= {CustomerAffinityService.class, ODDataSource.class})
 @EnableAutoConfiguration(exclude={DataSourceAutoConfiguration.class})
-public class ProductAffinityServiceTest extends Assert{
-	
-	private static Logger log = LoggerFactory.getLogger(ProductAffinityServiceTest.class);
+public class CustomerAffinityServiceTest {
+
+private static Logger log = LoggerFactory.getLogger(CustomerAffinityServiceTest.class);
 	
 	@Autowired
 	CamelContext camelContext; 
@@ -40,23 +37,12 @@ public class ProductAffinityServiceTest extends Assert{
 	ProducerTemplate producerTemplate; 
 	
 	@Test
-	public void testMultipleProductAffinityService() throws Exception{
-		File productAffinityServiceRequest = new File("./src/main/resources/sample/productAffinity/productAffinityServiceRequest-multiple.xml");
+	public void testCustomerAffinityService() throws Exception{
+		File customerAffinityServiceRequest = new File("./src/main/resources/sample/customerAffinity/CustomerAffinity_Request.xml");
 		DocumentBuilderFactory domFactory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder docBuilder = domFactory.newDocumentBuilder();
-		Document prodAffinityReqDoc = docBuilder.parse(productAffinityServiceRequest);
-		producerTemplate.sendBody("direct:productAffinityService", prodAffinityReqDoc);
-	}
-	
-	@Ignore
-	@Test
-	public void testSingleProductAffinityService() throws Exception{
-		/**
-		 * @author Michael-Costello
-		 * TODO build this out 
-		 */
-		
-	}
-	
+		Document custAffinityReqDoc = docBuilder.parse(customerAffinityServiceRequest);
+		producerTemplate.sendBody("direct:customerAffinityService", custAffinityReqDoc);
 
+	}
 }
