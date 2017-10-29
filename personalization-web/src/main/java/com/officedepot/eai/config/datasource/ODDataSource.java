@@ -1,4 +1,4 @@
-package com.officedepot.eai.data;
+package com.officedepot.eai.config.datasource;
 
 import javax.sql.DataSource;
 

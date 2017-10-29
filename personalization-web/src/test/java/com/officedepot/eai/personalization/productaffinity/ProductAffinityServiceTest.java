@@ -22,7 +22,7 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.w3c.dom.Document;
 
-import com.officedepot.eai.data.ODDataSource;
+import com.officedepot.eai.config.datasource.ODDataSource;
 import com.officedepot.eai.personalization.productaffinity.service.ProductAffinityService;
 
 @DirtiesContext

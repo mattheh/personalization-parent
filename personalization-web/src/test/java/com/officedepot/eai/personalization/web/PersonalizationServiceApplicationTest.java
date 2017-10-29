@@ -37,7 +37,7 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.officedepot.eai.data.ODDataSource;
+import com.officedepot.eai.config.datasource.ODDataSource;
 import com.officedepot.eai.personalization.productaffinity.service.ProductAffinityService;
 
 @RunWith(SpringRunner.class)
