@@ -15,11 +15,12 @@
  */
 package com.officedepot.eai.personalization.web;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
+import org.apache.camel.Exchange;
+import org.apache.camel.Processor;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.component.servlet.CamelHttpTransportServlet;
 import org.apache.camel.model.rest.RestBindingMode;
@@ -29,9 +30,14 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.ImportResource;
 import org.springframework.stereotype.Component;
+
+import com.officedepot.eai.personalization.web.entities.PersonalizationTransactionHeader;
+import com.officedepot.eai.personalization.web.entities.PersonalizedCoupon;
+import com.officedepot.eai.personalization.web.entities.PersonalizedRecomendationsPayloadResponse;
+import com.officedepot.eai.personalization.web.entities.PersonalizedRecomendationsResponse;
+import com.officedepot.eai.personalization.web.entities.PersonalizedRecommendedOffer;
 
 @SpringBootApplication
 @ImportResource({"classpath:spring/camel-context.xml"})
@@ -63,43 +69,60 @@ public class PersonalizationServiceApplication {
         	 */
             restConfiguration()
             	.component("{{application.servlet.component}}")
-                .contextPath("/eaiapi/personalization").apiContextPath("/getPersonalizationRequest")
-                    .apiProperty("api.title", "Personazliation Recommendations Request")
-                    .apiProperty("api.version", "0.1")
+                .contextPath("{{personalization.contextPath}}").apiContextPath("{{personalization.apiContextPath}}")
+                    .apiProperty("api.title", "{{personalization.api.title}}")
+                    .apiProperty("api.version", "{{personalization.api.version}}")
                     .apiProperty("cors", "true")
                     .apiContextRouteId("getPersonalizationRequest")
                 .bindingMode(RestBindingMode.json)
-                .host("localhost").port(8080);
+                .host("{{personalization.host}}").port(("{{personalization.port}}"));
 
-            rest("/getPersonalizationRequest").description("Personalization Recommendation Request")
+            rest("{{personalization.apiContextPath}}").description("{{personalization.api.title}}")
             	.post()
                     .route().routeId("personalization-recommendation-request")
-                    //.transform(simple(getStubbedResponse()))
-                    .log("${body}")
-                    .to("direct:productAffinityService").id("toProductAffinityService")
-                    .log("${body}")
                     /**
-                     * @author mcostell
-                     * FIXME mcostell should be doing something to fetch coupons here 		
+                     * @author Michael-Costello
+                     * FIXME this should be invoking back end services 
                      */
-                    /*.to("affinityService")*/
+                    .process(new PersonalizedRecomendationsResponseProcessor()).id("PERS_REC_RESP_PROC")
+                    .log("**Personalized Recommendations Response ${body}")
                     .endRest();
         }
         
-        private String getStubbedResponse() {
-        	File stubbedResponse = new File("./src/main/resources/sample/personalizationResponse.json"); 
-        	StringBuffer sampleResponse = new StringBuffer(); 
-        	try {
-        	    	BufferedReader reader = Files.newBufferedReader(Paths.get(stubbedResponse.getCanonicalPath()));
-        	    	while (reader.readLine() != null) {
-        	    		sampleResponse.append(reader.readLine());
-        	       	}
-        	    }catch(Exception e) {
-        	    	log.error(e);; 
-        	    }
-        	return sampleResponse.toString(); 
-        }
+        private class PersonalizedRecomendationsResponseProcessor implements Processor{
+        
+			@Override
+			public void process(Exchange exchange) throws Exception {
+				// TODO Auto-generated method stub
+				/*File stubbedResponse = new File("./src/main/resources/sample/personalizationRequest/personalizationResponse.json"); 
+	        	
+	        	ObjectMapper jsonMapper = new ObjectMapper(); 
+	        	TypeReference<List<PersonalizedRecomendationsResponse>> typeRef = new TypeReference<List<PersonalizedRecomendationsResponse>>() {}; 
+	        	PersonalizedRecomendationsPayloadResponse response = jsonMapper.readValue(stubbedResponse, PersonalizedRecomendationsPayloadResponse.class, typeRef);
+	        	 */
+				PersonalizedRecomendationsPayloadResponse response = new PersonalizedRecomendationsPayloadResponse(); 
+				PersonalizedRecomendationsResponse payloadResponse = new PersonalizedRecomendationsResponse(); 
+				PersonalizationTransactionHeader transactionHeader = new PersonalizationTransactionHeader(); 
+				transactionHeader.setConsumerName("testConsumer");
+				transactionHeader.setConsumerTransactionId("12345");
+				payloadResponse.setTransactionHeader(transactionHeader);
+				PersonalizedRecommendedOffer offer = new PersonalizedRecommendedOffer(); 
+				PersonalizedCoupon coupon = new PersonalizedCoupon(); 
+				coupon.setCouponCode("1212");
+				coupon.setCouponExpirationDate(new Date());
+				coupon.setLegalText("legalese");
+				coupon.setOfferDescription("Description");
+				coupon.setPromotionCode("1212");
+				coupon.setSerializedCoupon("serial");
+				offer.setCoupon(coupon);
+				List<PersonalizedRecommendedOffer> offers = new ArrayList<PersonalizedRecommendedOffer>(); 
+				offers.add(offer);
+				payloadResponse.setPersonalizedReccomendedOffers(offers);
+				response.setPayloadResponse(payloadResponse);
+	        	exchange.getIn().setBody(response); 
+			}
     }
 
    
 }
+    }
