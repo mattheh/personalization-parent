@@ -23,6 +23,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.w3c.dom.Document;
 
 import com.officedepot.eai.config.datasource.ODDataSource;
+import com.officedepot.eai.personalization.affinity.service.entities.ProductAffinityRequest;
 import com.officedepot.eai.personalization.productaffinity.service.ProductAffinityService;
 
 @DirtiesContext
@@ -45,6 +46,7 @@ public class ProductAffinityServiceTest extends Assert{
 		DocumentBuilderFactory domFactory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder docBuilder = domFactory.newDocumentBuilder();
 		Document prodAffinityReqDoc = docBuilder.parse(productAffinityServiceRequest);
+		
 		producerTemplate.sendBody("direct:productAffinityService", prodAffinityReqDoc);
 	}
 	

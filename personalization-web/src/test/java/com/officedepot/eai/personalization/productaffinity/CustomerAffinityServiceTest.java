@@ -7,6 +7,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 
 import org.apache.camel.CamelContext;
 import org.apache.camel.ProducerTemplate;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -36,6 +37,7 @@ private static Logger log = LoggerFactory.getLogger(CustomerAffinityServiceTest.
 	@Autowired
 	ProducerTemplate producerTemplate; 
 	
+	@Ignore
 	@Test
 	public void testCustomerAffinityService() throws Exception{
 		File customerAffinityServiceRequest = new File("./src/main/resources/sample/customerAffinity/CustomerAffinity_Request.xml");
