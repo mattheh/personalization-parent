@@ -1,0 +1,20 @@
+ {
+	"getPersonalizedRecommendationsResponse": {
+		"transactionHeader": {
+			"consumerName": "testConsumer",
+			"consumerTransactionID": "12345"
+		},
+		"personalizedRecommendedOffers": [
+			{
+				"personalizedCoupon": {
+					"promotionCode": "1212",
+					"offerDescription": "Description",
+					"couponCode": "1212",
+					"serializedCoupon": "serial",
+					"legalText": "legalese",
+					"CouponExpirationDate": 1509395020896
+				}
+			}
+		]
+	}
+}

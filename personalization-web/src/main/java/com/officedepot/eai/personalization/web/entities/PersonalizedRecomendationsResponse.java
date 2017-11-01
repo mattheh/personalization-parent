@@ -7,7 +7,6 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.fasterxml.jackson.annotation.JsonRootName;
 
 @JsonPropertyOrder({"transactionHeader","personalizedRecommendedOffers"})
-//@JsonRootName("getPersonalizationResponse")
 public class PersonalizedRecomendationsResponse {
 	private PersonalizationTransactionHeader transactionHeader;
 	private List<PersonalizedRecommendedOffer> personalizedReccomendedOffers;

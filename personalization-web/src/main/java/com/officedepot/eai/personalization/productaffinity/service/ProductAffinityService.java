@@ -55,7 +55,7 @@ public class ProductAffinityService extends RouteBuilder{
 		 */
 		.to("sql-stored:GETAFFPRD(VARCHAR ${body.productAffinityRequest.getCustomerLifeCycleGroup},VARCHAR ${body.productAffinityRequest.getCustomerTypeGroup},VARCHAR ${body.productAffinityRequest.getScoreType},VARCHAR ${headers.requestString},"
 				+ "OUT VARCHAR result)?dataSource=#dataSource").id("GETAFFPRD_SP")
-		.log(LoggingLevel.DEBUG,"*** GETAFFPRD returned ${body} ***").id("LOG_GETAFFPRD_RESULT")
+		.log(LoggingLevel.INFO,"*** GETAFFPRD returned ${body} ***").id("LOG_GETAFFPRD_RESULT")
 		.convertBodyTo(Map.class).id("CNVRT_BODY_TO_MAP")
 		/**
 		 * @author Michael-Costello

@@ -29,7 +29,7 @@ public class CustomerAffinityService extends RouteBuilder{
 			 * @author Michael-Costello
 			 * unmarshall payload to CustomerAffinityDBRequestEntity for use later in the route 
 			 */
-			.unmarshal(customerAffinityDF).id("UNMARSHALL_CST_AFF")
+			//.unmarshal(customerAffinityDF).id("UNMARSHALL_CST_AFF")
 			.log("***BODY AFTER UNMARSHALL ${body} ***")
 			.setHeader("transHeader", simple("${body.tranHeader}")).id("SET_TRANS_HEADER")
 			.to("sql-stored:GETAFFCST(VARCHAR ${body.getAgentId},VARCHAR ${body.getMarketingObjective},"

@@ -72,7 +72,7 @@ public class PersonalizationServiceApplication {
                 .contextPath("{{personalization.contextPath}}").apiContextPath("{{personalization.apiContextPath}}")
                     .apiProperty("api.title", "{{personalization.api.title}}")
                     .apiProperty("api.version", "{{personalization.api.version}}")
-                    .apiProperty("cors", "true")
+                    .apiProperty("cors", "true") //FIXME mcostell make this configuratble 
                     .apiContextRouteId("getPersonalizationRequest")
                 .bindingMode(RestBindingMode.json)
                 .host("{{personalization.host}}").port(("{{personalization.port}}"));
@@ -93,13 +93,7 @@ public class PersonalizationServiceApplication {
         
 			@Override
 			public void process(Exchange exchange) throws Exception {
-				// TODO Auto-generated method stub
-				/*File stubbedResponse = new File("./src/main/resources/sample/personalizationRequest/personalizationResponse.json"); 
-	        	
-	        	ObjectMapper jsonMapper = new ObjectMapper(); 
-	        	TypeReference<List<PersonalizedRecomendationsResponse>> typeRef = new TypeReference<List<PersonalizedRecomendationsResponse>>() {}; 
-	        	PersonalizedRecomendationsPayloadResponse response = jsonMapper.readValue(stubbedResponse, PersonalizedRecomendationsPayloadResponse.class, typeRef);
-	        	 */
+			
 				PersonalizedRecomendationsPayloadResponse response = new PersonalizedRecomendationsPayloadResponse(); 
 				PersonalizedRecomendationsResponse payloadResponse = new PersonalizedRecomendationsResponse(); 
 				PersonalizationTransactionHeader transactionHeader = new PersonalizationTransactionHeader(); 
