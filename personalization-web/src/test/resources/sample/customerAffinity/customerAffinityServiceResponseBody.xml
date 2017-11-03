@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<ns4:getCustomerAffinityRequest xmlns:ns2="http://www.officedepot.com/model/transaction" xmlns:ns4="http://eai.officedepot.com/service/AffinityModelService" xmlns:ns3="http://eai.officedepot.com/schemas/CustomerPersonalizedPromotionService">
+    <agentId>0004760709</agentId>
+    <marketingObjective>M</marketingObjective>
+</ns4:getCustomerAffinityRequest>

@@ -1,6 +1,5 @@
 package com.officedepot.eai.personalization.productaffinity;
 
-
 import java.io.File;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -48,7 +47,6 @@ public class ProductAffinityServiceTest extends CamelTestSupport{
 	
 	@Test
 	public void testMultipleProductAffinityService() throws Exception{
-		
 		camelContext.getRouteDefinitions().get(0).adviceWith(camelContext, new AdviceWithRouteBuilder() {
 		    @Override
 		    public void configure() throws Exception {

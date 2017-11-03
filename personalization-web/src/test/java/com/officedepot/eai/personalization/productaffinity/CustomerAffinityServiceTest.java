@@ -7,7 +7,8 @@ import javax.xml.parsers.DocumentBuilderFactory;
 
 import org.apache.camel.CamelContext;
 import org.apache.camel.ProducerTemplate;
-import org.junit.Ignore;
+import org.apache.camel.builder.AdviceWithRouteBuilder;
+import org.apache.camel.test.junit4.CamelTestSupport;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -27,9 +28,9 @@ import com.officedepot.eai.personalization.customeraffinity.service.CustomerAffi
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes= {CustomerAffinityService.class, ODDataSource.class})
 @EnableAutoConfiguration(exclude={DataSourceAutoConfiguration.class})
-public class CustomerAffinityServiceTest {
+public class CustomerAffinityServiceTest extends CamelTestSupport{
 
-private static Logger log = LoggerFactory.getLogger(CustomerAffinityServiceTest.class);
+	private static Logger log = LoggerFactory.getLogger(CustomerAffinityServiceTest.class);
 	
 	@Autowired
 	CamelContext camelContext; 
@@ -37,14 +38,29 @@ private static Logger log = LoggerFactory.getLogger(CustomerAffinityServiceTest.
 	@Autowired
 	ProducerTemplate producerTemplate; 
 	
-	@Ignore
+	protected CamelContext createCamelContext() throws Exception {                                                                                                                         
+	    return camelContext;
+	}
+	
 	@Test
 	public void testCustomerAffinityService() throws Exception{
+		camelContext.getRouteDefinitions().get(0).adviceWith(camelContext, new AdviceWithRouteBuilder() {
+		    @Override
+		    public void configure() throws Exception {
+		        weaveById("GETAFFCST_SP").replace().to("mock:test");
+		    }
+		});
+		
+        getMockEndpoint("mock:test").expectedMessageCount(1);
+        getMockEndpoint("mock:test").expectedBodiesReceived(camelContext.getTypeConverter().convertTo(String.class, new File("./src/test/resources/sample/customerAffinity/customerAffinityServiceResponseBody.xml")));
+		
 		File customerAffinityServiceRequest = new File("./src/main/resources/sample/customerAffinity/CustomerAffinity_Request.xml");
 		DocumentBuilderFactory domFactory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder docBuilder = domFactory.newDocumentBuilder();
 		Document custAffinityReqDoc = docBuilder.parse(customerAffinityServiceRequest);
+		
 		producerTemplate.sendBody("direct:customerAffinityService", custAffinityReqDoc);
-
+		
+		assertMockEndpointsSatisfied();
 	}
 }

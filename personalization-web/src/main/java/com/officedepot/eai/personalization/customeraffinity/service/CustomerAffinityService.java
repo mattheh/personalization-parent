@@ -20,7 +20,7 @@ public class CustomerAffinityService extends RouteBuilder{
 		JAXBContext jaxbContext = JAXBContext.newInstance(CustomerAffinityServiceRequestEntity.class);
 		DataFormat customerAffinityDF = new JaxbDataFormat(jaxbContext);
 		
-		//onException(Exception.class).handled(Boolean.TRUE).transform(simple("fixMe")); 
+		onException(Exception.class).handled(Boolean.TRUE).transform(simple("fixMe")); 
 		
 		from("direct:customerAffinityService").routeDescription("Customer Affinity Service")
 			.routeId("customerAffinityService").setHeader("service",simple("customerAffinityService"))
@@ -29,7 +29,7 @@ public class CustomerAffinityService extends RouteBuilder{
 			 * @author Michael-Costello
 			 * unmarshall payload to CustomerAffinityDBRequestEntity for use later in the route 
 			 */
-			//.unmarshal(customerAffinityDF).id("UNMARSHALL_CST_AFF")
+			.unmarshal(customerAffinityDF).id("UNMARSHALL_CST_AFF")
 			.log("***BODY AFTER UNMARSHALL ${body} ***")
 			.setHeader("transHeader", simple("${body.tranHeader}")).id("SET_TRANS_HEADER")
 			.to("sql-stored:GETAFFCST(VARCHAR ${body.getAgentId},VARCHAR ${body.getMarketingObjective},"
