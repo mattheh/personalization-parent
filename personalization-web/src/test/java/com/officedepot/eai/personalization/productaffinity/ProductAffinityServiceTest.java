@@ -8,6 +8,8 @@ import javax.xml.parsers.DocumentBuilderFactory;
 
 import org.apache.camel.CamelContext;
 import org.apache.camel.ProducerTemplate;
+import org.apache.camel.builder.AdviceWithRouteBuilder;
+import org.apache.camel.test.junit4.CamelTestSupport;
 import org.junit.Assert;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -30,7 +32,7 @@ import com.officedepot.eai.personalization.productaffinity.service.ProductAffini
 @RunWith(SpringRunner.class)
 @SpringBootTest(classes= {ProductAffinityService.class, ODDataSource.class})
 @EnableAutoConfiguration(exclude={DataSourceAutoConfiguration.class})
-public class ProductAffinityServiceTest extends Assert{
+public class ProductAffinityServiceTest extends CamelTestSupport{
 	
 	private static Logger log = LoggerFactory.getLogger(ProductAffinityServiceTest.class);
 	
@@ -40,14 +42,31 @@ public class ProductAffinityServiceTest extends Assert{
 	@Autowired
 	ProducerTemplate producerTemplate; 
 	
+	protected CamelContext createCamelContext() throws Exception {                                                                                                                         
+	    return camelContext;
+	}
+	
 	@Test
 	public void testMultipleProductAffinityService() throws Exception{
+		
+		camelContext.getRouteDefinitions().get(0).adviceWith(camelContext, new AdviceWithRouteBuilder() {
+		    @Override
+		    public void configure() throws Exception {
+		        weaveById("GETAFFPRD_SP").replace().to("mock:test");
+		    }
+		});
+		
+        getMockEndpoint("mock:test").expectedMessageCount(1);
+        getMockEndpoint("mock:test").expectedBodiesReceived(camelContext.getTypeConverter().convertTo(String.class, new File("./src/test/resources/sample/productAffinity/productAffinityServiceResponseBody.xml")));
+        
 		File productAffinityServiceRequest = new File("./src/main/resources/sample/productAffinity/productAffinityServiceRequest-multiple.xml");
 		DocumentBuilderFactory domFactory = DocumentBuilderFactory.newInstance();
 		DocumentBuilder docBuilder = domFactory.newDocumentBuilder();
 		Document prodAffinityReqDoc = docBuilder.parse(productAffinityServiceRequest);
 		
 		producerTemplate.sendBody("direct:productAffinityService", prodAffinityReqDoc);
+		
+		assertMockEndpointsSatisfied();
 	}
 	
 	@Ignore
